@@ -13,7 +13,7 @@
 :root{
   --green:#2E8B57; --green-dark:#1B5E20; --green-light:#4CAF50; --green-soft:#A5D6A7; --green-bg:#E8F5E9;
   --orange:#E67E22; --orange-light:#FFA726; --orange-soft:#FFE0B2; --orange-bg:#FFF3E0;
-  --cream:#FFF9E6; --gold:#D4A017; --red:#C00000;
+  --cream:#FFF9E6; --gold:#D4A017; --gold-dark:#B8860B; --gold-deep:#8B6914; --red:#C00000;
   --line:rgba(46,139,87,.22); --line-soft:rgba(46,139,87,.14);
   --text:#1B5E20; --text-body:#2E3D30; --muted:#6B7B6E;
   --danger:#D32F2F; --ok:#2E8B57;
@@ -166,6 +166,15 @@ body::after{
 .stat .lbl{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600}
 .stat .sub{font-size:11.5px;color:#8A9A8C;margin-top:5px}
 
+/* ★ Flag stat card variant */
+.stat.stat-flag::before{background:linear-gradient(90deg,var(--gold),var(--gold-dark),var(--orange));opacity:1}
+.stat.stat-flag .ico{
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  border-color:var(--gold-deep);
+  box-shadow:0 5px 14px rgba(212,160,23,.35), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.stat.stat-flag .val{color:var(--gold-deep)}
+
 /* ============ ANALYTICS ============ */
 .analytics{
   display:grid;gap:14px;margin-bottom:18px;
@@ -193,6 +202,7 @@ body::after{
 .bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--green-light));transition:width .5s cubic-bezier(.4,0,.2,1)}
 .bar-fill.g2{background:linear-gradient(90deg,#E67E22,#FFA726)}
 .bar-fill.g3{background:linear-gradient(90deg,#7E57C2,#0288D1)}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--orange-light))}
 
 /* ============ TABLE PANEL ============ */
 .panel{
@@ -230,9 +240,15 @@ select.sel{
 }
 select.sel:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(46,139,87,.14);background-color:#fff}
 select.sel option{background:#fff;color:var(--text-body)}
+/* ★ Flag filter gets a gold accent when active */
+select.sel.flagged-active{
+  border-color:var(--gold);
+  background-color:rgba(255,249,230,.95);
+  box-shadow:0 0 0 4px rgba(212,160,23,.14);
+}
 
 .table-scroll{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13.3px;min-width:1120px}
+table{width:100%;border-collapse:collapse;font-size:13.3px;min-width:1180px}
 thead th{
   position:sticky;top:0;z-index:2;
   background:linear-gradient(180deg,rgba(232,245,233,.95),rgba(255,252,240,.9));
@@ -245,12 +261,68 @@ thead th.sortable:hover{color:var(--orange);background:linear-gradient(180deg,rg
 thead th .arw{opacity:.4;font-size:9px;margin-left:3px}
 thead th.on{color:var(--orange)}
 thead th.on .arw{opacity:1}
+/* ★ Flag column header accent */
+thead th.th-flag{text-align:center;color:var(--gold-deep)}
+thead th.th-flag:hover{color:var(--gold);background:linear-gradient(180deg,rgba(255,243,224,.95),rgba(255,252,240,.9))}
+thead th.th-flag.on{color:var(--gold)}
+
 tbody tr{border-bottom:1px solid rgba(46,139,87,.09);transition:background .15s;cursor:pointer}
 tbody tr:hover{background:rgba(232,245,233,.55)}
 tbody tr:last-child{border-bottom:none}
 tbody td{padding:10px 13px;vertical-align:middle;color:var(--text-body)}
 td.sl{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px;width:46px}
 td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--green-dark);white-space:nowrap;font-weight:600}
+
+/* ★★★ FLAGGED ROW HIGHLIGHT ★★★ */
+tbody tr.flagged{
+  background:linear-gradient(90deg, rgba(255,224,178,.5) 0%, rgba(255,249,230,.28) 45%, rgba(255,252,240,.1) 100%);
+}
+tbody tr.flagged:hover{
+  background:linear-gradient(90deg, rgba(255,215,150,.65) 0%, rgba(255,243,224,.45) 45%, rgba(255,252,240,.2) 100%);
+}
+tbody tr.flagged td:first-child{
+  box-shadow:inset 3px 0 0 var(--gold);
+  color:var(--gold-deep);
+  font-weight:700;
+}
+tbody tr.flagged td.sl{color:var(--gold-deep)}
+
+/* ★ Bookmark toggle button in the table */
+.flagbtn{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  font:inherit;font-size:11px;font-weight:700;cursor:pointer;
+  padding:5px 9px;border-radius:9px;transition:.2s;white-space:nowrap;
+  background:rgba(255,255,255,.72);border:1px solid rgba(107,123,110,.28);
+  color:#A0AFA2;line-height:1;
+}
+.flagbtn svg{width:13px;height:13px;flex:0 0 auto;display:block}
+.flagbtn:hover{
+  border-color:var(--gold);color:var(--gold-deep);
+  background:rgba(255,249,230,.9);transform:translateY(-1px);
+  box-shadow:0 3px 9px rgba(212,160,23,.22);
+}
+.flagbtn:active{transform:translateY(0)}
+.flagbtn.on{
+  background:linear-gradient(135deg,rgba(212,160,23,.24),rgba(230,126,34,.3));
+  border-color:rgba(212,160,23,.7);
+  color:#7A4F00;
+  box-shadow:0 2px 9px rgba(212,160,23,.28);
+}
+.flagbtn.on:hover{
+  background:linear-gradient(135deg,rgba(212,160,23,.36),rgba(230,126,34,.42));
+  border-color:var(--gold);
+}
+.flagbtn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* ★ Flag chip used in modal header */
+.chip.flag-chip{
+  color:#7A4F00;
+  background:linear-gradient(135deg,rgba(255,243,224,.98),rgba(255,224,178,.8));
+  border-color:rgba(212,160,23,.6);
+  display:inline-flex;align-items:center;gap:5px;
+  font-weight:700;
+}
+.chip.flag-chip svg{width:11px;height:11px}
 
 .thumb-wrap{width:44px;height:44px;border-radius:10px;overflow:hidden;background:var(--green-bg);flex:0 0 auto;border:1px solid rgba(46,139,87,.35);box-shadow:0 2px 6px rgba(46,139,87,.12)}
 .thumb{width:100%;height:100%;object-fit:cover;display:block}
@@ -344,8 +416,14 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   content:"";position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--green),var(--orange-light),var(--green));opacity:.95;
 }
+/* ★ Gold top bar when the record is flagged */
+.modal.is-flagged .modal-head::before{
+  background:linear-gradient(90deg,var(--gold),var(--orange-light),var(--gold));
+  opacity:1;
+}
 .modal-head .who{display:flex;align-items:center;gap:14px;flex:1;min-width:240px;position:relative;z-index:1}
 .modal-head .ava{width:62px;height:62px;border-radius:15px;overflow:hidden;border:1px solid rgba(46,139,87,.4);flex:0 0 auto;background:var(--green-bg);box-shadow:0 4px 14px rgba(46,139,87,.2)}
+.modal.is-flagged .modal-head .ava{border-color:rgba(212,160,23,.65);box-shadow:0 4px 14px rgba(212,160,23,.28)}
 .modal-head .ava img{width:100%;height:100%;object-fit:cover;display:block}
 .modal-head .ava .thumb-ph{font-size:20px}
 .modal-head h2{margin:0;font-size:19px;font-weight:700;letter-spacing:-.3px;color:var(--green-dark)}
@@ -418,6 +496,30 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   box-shadow:0 5px 16px rgba(230,126,34,.32);
 }
 .action-btn.notify2:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 22px rgba(230,126,34,.45);filter:brightness(1.05)}
+
+/* ★★★ REVIEW FLAG TOGGLE BUTTON ★★★ */
+.action-btn.flag{
+  color:#7A4F00;
+  background:rgba(255,255,255,.94);
+  border-color:rgba(212,160,23,.5);
+  box-shadow:0 3px 10px rgba(212,160,23,.14);
+}
+.action-btn.flag:hover:not(:disabled){
+  background:linear-gradient(135deg,rgba(255,249,230,.98),rgba(255,224,178,.75));
+  border-color:var(--gold);
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(212,160,23,.3);
+}
+.action-btn.flag.on{
+  color:#fff;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  border-color:var(--gold-deep);
+  box-shadow:0 5px 16px rgba(212,160,23,.42);
+}
+.action-btn.flag.on:hover:not(:disabled){filter:brightness(1.06);box-shadow:0 8px 22px rgba(212,160,23,.55)}
+.action-btn.flag svg{transition:.2s}
+.action-btn.flag.on svg{transform:scale(1.08)}
+
 .action-btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:none!important}
 .action-btn .spin{
   width:14px;height:14px;border-radius:50%;
@@ -427,6 +529,8 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   display:inline-block;
 }
 .action-btn.reject .spin{border-color:rgba(211,47,47,.3);border-top-color:var(--danger)}
+.action-btn.flag .spin{border-color:rgba(212,160,23,.3);border-top-color:var(--gold)}
+.action-btn.flag.on .spin{border-color:rgba(255,255,255,.4);border-top-color:#fff}
 
 .modal-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
 
@@ -459,7 +563,44 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
 .iv .empty{color:#A0AFA2}
 .iv a{color:var(--green);text-decoration:none;font-weight:600}
 .iv a:hover{text-decoration:underline}
+.iv .flag-yes{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:700;color:#7A4F00;
+  background:linear-gradient(135deg,rgba(255,243,224,.95),rgba(255,224,178,.7));
+  border:1px solid rgba(212,160,23,.5);
+  padding:3px 9px;border-radius:8px;
+}
+.iv .flag-yes svg{width:11px;height:11px}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+
+/* ---- Payment card (info + screenshot preview) ---- */
+.card-full{grid-column:1/-1}
+.pay-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,290px);gap:16px;align-items:start}
+@media(max-width:760px){.pay-wrap{grid-template-columns:1fr}}
+.shot-label{
+  font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:7px;
+}
+.shot-label svg{width:13px;height:13px;color:var(--orange)}
+.shot-box{
+  position:relative;width:100%;aspect-ratio:3/4;max-height:330px;
+  border-radius:13px;overflow:hidden;border:1px solid rgba(46,139,87,.3);
+  background:#fff;cursor:zoom-in;display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(46,139,87,.12);
+}
+.shot-box img{width:100%;height:100%;object-fit:contain;display:block;background:#fff;transition:.35s}
+.shot-box:hover img{transform:scale(1.03)}
+.shot-overlay{
+  position:absolute;left:0;right:0;bottom:0;padding:9px 10px;
+  font-size:11.5px;font-weight:700;color:#fff;text-align:center;
+  background:linear-gradient(transparent,rgba(27,94,32,.85));
+  opacity:0;transition:.25s;pointer-events:none;
+}
+.shot-box:hover .shot-overlay{opacity:1}
+.shot-empty{
+  font-size:12.5px;color:#A0AFA2;padding:22px 14px;text-align:center;
+  border:1px dashed var(--line);border-radius:12px;background:rgba(255,255,255,.5);
+}
 
 /* ============ VIDEO PLAYER ============ */
 .vp{
@@ -468,6 +609,7 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   box-shadow:inset 0 0 60px rgba(0,0,0,.4);
 }
 .vp-video{width:100%;height:100%;object-fit:contain;display:block;background:#0d1a0f}
+.vp-frame{width:100%;height:100%;border:0;display:block;background:#0d1a0f}
 .vp-big{
   position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:50%;
   border:none;cursor:pointer;color:#fff;display:grid;place-items:center;
@@ -482,9 +624,16 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
 .vp-spin i{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:var(--green-light);animation:spin .8s linear infinite;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .vp-err{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:6px;background:rgba(13,26,15,.94);color:#FFA726;font-size:13.5px;font-weight:600;z-index:6;padding:20px}
+.vp-err[hidden]{display:none !important}
 .vp-err span{color:rgba(255,255,255,.6);font-weight:400;font-size:12.5px}
 .vp-err a{color:var(--green-light);font-size:12.5px;font-weight:600}
 .vp-err .err-code{display:block;color:rgba(255,255,255,.45);font-size:11px;margin-top:4px;font-family:ui-monospace,Menlo,monospace}
+.vp-note{
+  position:absolute;left:10px;top:10px;z-index:6;
+  font-size:11px;font-weight:700;color:#fff;
+  background:rgba(27,94,32,.78);padding:5px 10px;border-radius:8px;pointer-events:none;
+  backdrop-filter:blur(3px);
+}
 .vp-ui{
   position:absolute;left:0;right:0;bottom:0;z-index:5;
   display:flex;align-items:center;gap:9px;
@@ -719,6 +868,7 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
 .toast.success::before{background:var(--green)}
 .toast.error::before{background:var(--danger)}
 .toast.info::before{background:var(--orange)}
+.toast.flag::before{background:var(--gold)}
 .toast .tico{
   width:24px;height:24px;border-radius:50%;flex:0 0 auto;
   display:grid;place-items:center;color:#fff;font-weight:700;font-size:.82em;
@@ -727,6 +877,7 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
 .toast.success .tico{background:linear-gradient(135deg,var(--green),var(--green-dark))}
 .toast.error .tico{background:linear-gradient(135deg,var(--danger),#8B0000)}
 .toast.info .tico{background:linear-gradient(135deg,var(--orange),#C9600F)}
+.toast.flag .tico{background:linear-gradient(135deg,var(--gold),var(--gold-dark))}
 .toast .tmsg{flex:1;min-width:0;word-break:break-word}
 .toast.out{animation:toastOut .26s ease forwards}
 @keyframes toastIn{from{opacity:0;transform:translateX(30px) scale(.96)}to{opacity:1;transform:none}}
@@ -736,6 +887,10 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(13,26,15,.94);display:none;place-items:center;padding:30px;cursor:zoom-out}
 .lightbox.open{display:grid;animation:fade .2s}
 .lightbox img{max-width:100%;max-height:90vh;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.lightbox .lb-hint{
+  position:absolute;bottom:18px;left:0;right:0;text-align:center;
+  font-size:12px;color:rgba(255,255,255,.55);font-weight:600;pointer-events:none;
+}
 
 /* ============ MISC ============ */
 .loader{display:flex;flex-direction:column;align-items:center;gap:14px;padding:70px 20px;color:var(--muted)}
@@ -773,7 +928,7 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   .toast-wrap{top:14px;right:14px;left:14px;max-width:none}
 }
 @media(max-width:520px){
-  .stats{grid-template-columns:repeat(auto-fit,minmax(115px,160px));}
+  .stat{flex-direction:row;padding:12px;gap:11px}
   .stat .ico{width:38px;height:38px;border-radius:11px}
   .stat .ico svg{width:17px;height:17px}
   .stat .val{font-size:17px}
@@ -794,6 +949,8 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   .notify-icon{width:44px;height:44px}
   .notify-icon svg{width:20px;height:20px}
   .notify-stage-tabs{grid-template-columns:1fr}
+  .shot-box{max-height:420px;aspect-ratio:auto;min-height:260px}
+  .flagbtn span{display:none}
 }
 </style>
 </head>
@@ -842,8 +999,13 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
         <option value="pending">⏳ যাচাই-বাছাই বাকি</option>
         <option value="rejected">✕ বাতিল / বরখাস্ত</option>
       </select>
+      <select class="sel" id="fFlag">
+        <option value="">সব ফ্ল্যাগ</option>
+        <option value="flagged">🔖 শুধু ফ্ল্যাগ করা</option>
+        <option value="unflagged">ফ্ল্যাগ করা হয়নি</option>
+      </select>
       <select class="sel" id="fGroup"><option value="">সব গ্রুপ</option></select>
-      <select class="sel" id="fDistrict"><option value="">সব জেলা</option></select>
+      <select class="sel" id="fDistrict"><option value="">সব স্থায়ী জেলা</option></select>
       <select class="sel" id="fSize">
         <option value="10">১০ / পৃষ্ঠা</option>
         <option value="25" selected>২৫ / পৃষ্ঠা</option>
@@ -857,11 +1019,12 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
           <tr>
             <th style="width:46px">#</th>
             <th style="width:60px">ছবি</th>
+            <th class="sortable th-flag" data-sort="flag" style="width:104px;text-align:center">ফ্ল্যাগ <span class="arw">▲▼</span></th>
             <th class="sortable" data-sort="id">প্রতিযোগী আইডি <span class="arw">▲▼</span></th>
             <th class="sortable" data-sort="name">নাম <span class="arw">▲▼</span></th>
             <th class="sortable" data-sort="group">গ্রুপ / শ্রেণি <span class="arw">▲▼</span></th>
             <th class="sortable" data-sort="institution">প্রতিষ্ঠান <span class="arw">▲▼</span></th>
-            <th class="sortable" data-sort="pDistrict">জেলা <span class="arw">▲▼</span></th>
+            <th class="sortable" data-sort="district">স্থায়ী জেলা <span class="arw">▲▼</span></th>
             <th>মোবাইল</th>
             <th class="sortable" data-sort="amount">পরিমাণ <span class="arw">▲▼</span></th>
             <th class="sortable" data-sort="status">স্ট্যাটাস <span class="arw">▲▼</span></th>
@@ -955,7 +1118,10 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
   </div>
 </div>
 
-<div class="lightbox" id="lightbox"><img id="lightboxImg" alt=""/></div>
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" alt=""/>
+  <div class="lb-hint">বন্ধ করতে যেকোনো জায়গায় ক্লিক করুন অথবা Esc চাপুন</div>
+</div>
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
@@ -964,7 +1130,7 @@ td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:
    ========================================================================== */
 const CONFIG = {
   fee: 49,
-  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyyL6J3vKGBWppVJckruW3SL4YiQ7OOz2jZqT-tS6I0Z2XlZTNmyrgThtS1ylJieGGAkA/exec'
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwv21bp_2agoE5UssTAvtFGRaLjlLGAsNJQeOf9SNr-VpsKVRBqPsK1_NlD4YcJ0Pc88g/exec'
 };
 
 /* ==========================================================================
@@ -985,6 +1151,7 @@ const ICONS = {
   idcard: SVG('<rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8.5" cy="11" r="2.2"/><path d="M4.8 17c.5-1.6 2-2.5 3.7-2.5s3.2.9 3.7 2.5M15 10h4M15 14h3"/>'),
   pin:    SVG('<path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/>'),
   card:   SVG('<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>'),
+  receipt:SVG('<path d="M4 3h16v18l-2.5-1.6L15 21l-2.5-1.6L10 21l-2.5-1.6L5 21V3z"/><path d="M9 8h6M9 12h6M9 16h3"/>'),
   phone:  SVG('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>'),
   play:   SVG('<path d="M6 4l14 8-14 8V4z" fill="currentColor" stroke="none"/>'),
   pause:  SVG('<path d="M7 4h3.5v16H7zM13.5 4H17v16h-3.5z" fill="currentColor" stroke="none"/>'),
@@ -1000,7 +1167,10 @@ const ICONS = {
   dl:     SVG('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>'),
   grid:   SVG('<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>'),
   search: SVG('<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'),
-  star:   SVG('<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" fill="currentColor" stroke="none"/>')
+  star:   SVG('<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" fill="currentColor" stroke="none"/>'),
+  /* ★ Review flag icons */
+  bookmark:     SVG('<path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>'),
+  bookmarkFill: SVG('<path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="currentColor" stroke="none"/>')
 };
 
 /* ==========================================================================
@@ -1036,6 +1206,70 @@ function shortUrl(u, n){
   return u.length > (n||42) ? u.slice(0, (n||42)) + '…' : u;
 }
 
+/* --------------------------------------------------------------------------
+   ★ MOBILE NUMBER NORMALIZATION (leading zero restore)
+   -------------------------------------------------------------------------- */
+function formatMobile(v){
+  if (v === null || v === undefined) return '';
+  const raw = String(v).trim();
+  if (!raw) return '';
+  let d = raw.replace(/\D/g, '');
+  if (!d) return raw;
+  if (d.indexOf('880') === 0 && d.length > 11) d = d.slice(3);
+  else if (d.indexOf('88') === 0 && d.length > 11) d = d.slice(2);
+  if (d.length === 10 && d.charAt(0) === '1') d = '0' + d;
+  return d;
+}
+
+/* ==========================================================================
+   ★ MEDIA URL RESOLUTION (Google Drive / YouTube / direct)
+   ========================================================================== */
+function extractDriveId(url){
+  const u = String(url || '');
+  let m = u.match(/drive\.google\.com\/file\/d\/([-\w]{20,})/);
+  if (m) return m[1];
+  m = u.match(/[?&]id=([-\w]{20,})/);
+  if (m) return m[1];
+  m = u.match(/docs\.google\.com\/[^/]+\/d\/([-\w]{20,})/);
+  if (m) return m[1];
+  m = u.match(/drive\.google\.com\/thumbnail\?id=([-\w]{20,})/);
+  if (m) return m[1];
+  return '';
+}
+function resolveImage(url, width){
+  const u = String(url || '').trim();
+  if (!u) return '';
+  if (/^data:/i.test(u)) return u;
+  if (/drive\.google\.com|docs\.google\.com/i.test(u)){
+    const id = extractDriveId(u);
+    if (id) return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w' + (width || 1200);
+  }
+  return u;
+}
+function resolveVideo(url){
+  const u = String(url || '').trim();
+  if (!u) return null;
+
+  const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([-\w]{11})/);
+  if (yt){
+    return { kind:'youtube', embed:'https://www.youtube.com/embed/' + yt[1] + '?rel=0&modestbranding=1', direct:'' };
+  }
+
+  if (/drive\.google\.com|docs\.google\.com/i.test(u)){
+    const id = extractDriveId(u);
+    if (id){
+      return {
+        kind:   'drive',
+        fileId: id,
+        direct: 'https://drive.google.com/uc?export=download&id=' + id,
+        embed:  'https://drive.google.com/file/d/' + id + '/preview'
+      };
+    }
+  }
+
+  return { kind:'direct', direct:u, embed:'' };
+}
+
 /* ==========================================================================
    STATE
    ========================================================================== */
@@ -1043,12 +1277,13 @@ const state = {
   rows: [], filtered: [],
   page: 1, pageSize: 25,
   sortKey: 'timestamp', sortDir: 'desc',
-  q: '', group: '', district: '', status: '',
+  q: '', group: '', district: '', status: '', flag: '',
   currentIndex: -1,
   currentRow: null,
   player: null,
   loading: true,
   statusCache: new Map(),
+  flagCache: new Map(),          /* ★ local optimistic flag overrides */
   updating: new Set(),
   notifyStage: 1
 };
@@ -1089,10 +1324,15 @@ const F = {
   videoSize:   r => g(r,'videosizemb','videosize','size','videombersize'),
   payMethod:   r => g(r,'paymentmethod','method','paymenttype'),
   trxId:       r => g(r,'transactionid','trxid','transaction','txnid','transid'),
+  payShot:     r => g(r,'paymentscreenshot','paymentscreenshoturl','paymentscreenshotlink','screenshot','screenshoturl','paymentproof','paymentproofurl'),
   amount:      r => g(r,'amount','fee','paidamount'),
   payerMobile: r => g(r,'payermobile','payermobileno','sendermobile','payercontact'),
-  status:      r => g(r,'status','paymentstatus','applicationstatus')
+  status:      r => g(r,'status','paymentstatus','applicationstatus'),
+  /* ★★★ Review Flag — the new internal evaluation column ★★★ */
+  reviewFlag:  r => g(r,'reviewflag','reviewmark','flag','shortlisted','shortlist','bookmark','marked','isflagged')
 };
+/* District across table / filters / stats = PERMANENT district */
+F.district = r => F.qDistrict(r) || F.pDistrict(r);
 
 /* ==========================================================================
    STATUS CLASSIFICATION
@@ -1111,6 +1351,33 @@ function statusMeta(kind){
   if (kind === 'approved') return { label: 'নিশ্চিত / অনুমোদিত', cls: 'b-ok' };
   if (kind === 'rejected') return { label: 'বাতিল / বরখাস্ত',  cls: 'b-bad' };
   return { label: 'যাচাই-বাছাই বাকি', cls: 'b-warn' };
+}
+
+/* ==========================================================================
+   ★★★ REVIEW FLAG LOGIC ★★★
+   --------------------------------------------------------------------------
+   Sheet column: "Review Flag"  →  values "Yes" / "No"
+   Blank is treated as "No".
+   state.flagCache holds per-session optimistic overrides keyed by Contestant ID.
+   ========================================================================== */
+function parseFlag(value){
+  const s = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
+  if (!s) return false;
+  /* negatives first — "unflagged" contains "flag" */
+  if (/^(no|n|false|0|-|—|✗|✕|না|নয়)$/.test(s)) return false;
+  if (/(^|\s)(unflag|not[\s_-]*flag|no[\s_-]*flag|unmark)/.test(s)) return false;
+  if (/^(yes|y|true|1|✓|✔|হ্যাঁ)$/.test(s)) return true;
+  if (/(flag|shortlist|bookmark|marked|mark|review)/.test(s)) return true;
+  return false;
+}
+function isFlagged(row){
+  const cid = String(F.id(row) || '').trim();
+  if (cid && state.flagCache.has(cid)) return state.flagCache.get(cid);
+  return parseFlag(F.reviewFlag(row));
+}
+/* Locate the actual sheet key so we can mirror the write locally */
+function flagKeyOf(row){
+  return Object.keys(row.n).find(k => /^(reviewflag|reviewmark|flag|shortlisted|shortlist|bookmark|marked|isflagged)$/.test(k)) || '';
 }
 
 /* ==========================================================================
@@ -1169,7 +1436,7 @@ async function fetchRows(){
 function showToast(message, type){
   type = type || 'info';
   const wrap = $('#toastWrap');
-  const icons = { success: '✓', error: '!', info: 'i' };
+  const icons = { success: '✓', error: '!', info: 'i', flag: '🔖' };
   const el = document.createElement('div');
   el.className = 'toast ' + type;
   el.innerHTML = `
@@ -1206,6 +1473,7 @@ async function loadData(){
     const result = await fetchRows();
     state.rows = result.rows;
     state.statusCache.clear();
+    state.flagCache.clear();      /* fresh server data wins */
     state.loading = false;
 
     if (!state.rows.length){
@@ -1244,7 +1512,7 @@ function uniqSorted(values){
 }
 function buildFilters(){
   const groups    = uniqSorted(state.rows.map(F.group));
-  const districts = uniqSorted(state.rows.map(F.pDistrict));
+  const districts = uniqSorted(state.rows.map(F.district));
   const fill = (sel, items, label) => {
     const el = $(sel);
     const cur = el.value;
@@ -1252,18 +1520,26 @@ function buildFilters(){
     if (items.indexOf(cur) >= 0) el.value = cur;
   };
   fill('#fGroup', groups, 'সব গ্রুপ');
-  fill('#fDistrict', districts, 'সব জেলা');
+  fill('#fDistrict', districts, 'সব স্থায়ী জেলা');
 }
 function applyFilters(){
   const q = state.q.trim().toLowerCase();
   state.filtered = state.rows.filter(r => {
     if (state.group && String(F.group(r)) !== state.group) return false;
-    if (state.district && String(F.pDistrict(r)) !== state.district) return false;
+    if (state.district && String(F.district(r)) !== state.district) return false;
     if (state.status && classifyStatus(r) !== state.status) return false;
+    /* ★ flag filter */
+    if (state.flag === 'flagged'   && !isFlagged(r)) return false;
+    if (state.flag === 'unflagged' &&  isFlagged(r)) return false;
     if (!q) return true;
-    return [F.name(r), F.id(r), F.mobile(r), F.whatsapp(r), F.institution(r),
-            F.trxId(r), F.payerMobile(r), F.group(r), F.klass(r), F.pDistrict(r),
-            F.father(r), F.mother(r)].some(v => String(v || '').toLowerCase().includes(q));
+    return [
+      F.name(r), F.id(r),
+      formatMobile(F.mobile(r)), formatMobile(F.whatsapp(r)), formatMobile(F.payerMobile(r)),
+      F.mobile(r), F.whatsapp(r),
+      F.institution(r), F.trxId(r), F.group(r), F.klass(r),
+      F.district(r), F.pDistrict(r), F.qDistrict(r),
+      F.father(r), F.mother(r)
+    ].some(v => String(v || '').toLowerCase().includes(q));
   });
   state.filtered = sortRows(state.filtered);
   state.page = 1;
@@ -1274,9 +1550,14 @@ function sortRows(rows){
   const dir = state.sortDir === 'asc' ? 1 : -1;
   const getters = {
     id: F.id, name: F.name, group: F.group, klass: F.klass,
-    institution: F.institution, pDistrict: F.pDistrict,
-    amount: F.amount, status: r => statusMeta(classifyStatus(r)).label,
-    timestamp: F.timestamp
+    institution: F.institution,
+    district: F.district,
+    pDistrict: F.pDistrict,
+    amount: F.amount,
+    status: r => statusMeta(classifyStatus(r)).label,
+    timestamp: F.timestamp,
+    /* ★ flag sort: unflagged (0) → flagged (1) on ascending */
+    flag: r => isFlagged(r) ? 1 : 0
   };
   const get = getters[state.sortKey];
   if (!get) return rows;
@@ -1303,16 +1584,30 @@ function renderStats(){
   const rows = state.rows;
   const total = rows.length;
   const totalFee = total * CONFIG.fee;
-  let approved = 0, pending = 0, rejected = 0;
+  let approved = 0, pending = 0, rejected = 0, flaggedCount = 0, flaggedApproved = 0, flaggedPending = 0;
   rows.forEach(r => {
     const k = classifyStatus(r);
     if (k === 'approved') approved++;
     else if (k === 'rejected') rejected++;
     else pending++;
+
+    if (isFlagged(r)){
+      flaggedCount++;
+      if (k === 'approved') flaggedApproved++;
+      else if (k === 'pending') flaggedPending++;
+    }
   });
   const male = rows.filter(r => /^m|ছেলে/i.test(String(F.gender(r)))).length;
   const female = rows.filter(r => /^f|মেয়ে/i.test(String(F.gender(r)))).length;
-  const districts = new Set(rows.map(F.pDistrict).map(v => String(v).trim()).filter(Boolean)).size;
+
+  const permDistricts = new Set(
+    rows.map(F.qDistrict).map(v => String(v).trim()).filter(Boolean)
+  ).size;
+  const permDistrictsFallback = new Set(
+    rows.map(F.district).map(v => String(v).trim()).filter(Boolean)
+  ).size;
+  const districtCount = permDistricts || permDistrictsFallback;
+
   const institutions = new Set(rows.map(F.institution).map(v => String(v).trim()).filter(Boolean)).size;
   const pct = n => total ? Math.round(n / total * 100) : 0;
 
@@ -1322,13 +1617,16 @@ function renderStats(){
     { ico: ICONS.check, val: toBn(approved), lbl: 'নিশ্চিত / অনুমোদিত', sub: `সব আবেদনের ${toBn(pct(approved))}%` },
     { ico: ICONS.clock, val: toBn(pending), lbl: 'যাচাই-বাছাই বাকি', sub: `সব আবেদনের ${toBn(pct(pending))}%` },
     { ico: ICONS.ban,   val: toBn(rejected), lbl: 'বাতিল / বরখাস্ত', sub: `সব আবেদনের ${toBn(pct(rejected))}%` },
+    /* ★ Review flag stat card */
+    { ico: ICONS.bookmarkFill, val: toBn(flaggedCount), lbl: 'রিভিউ ফ্ল্যাগ', flag: true,
+      sub: `অনুমোদিত ${toBn(flaggedApproved)} · অপেক্ষমাণ ${toBn(flaggedPending)}` },
     { ico: ICONS.gender,val: `${toBn(male)} / ${toBn(female)}`, lbl: 'ছেলে / মেয়ে', sub: 'লিঙ্গ অনুপাত' },
-    { ico: ICONS.map,   val: toBn(districts), lbl: 'জেলা', sub: 'স্বতন্ত্র বর্তমান জেলা' },
+    { ico: ICONS.map,   val: toBn(districtCount), lbl: 'মোট স্থায়ী জেলা', sub: 'স্থায়ী ঠিকানা অনুযায়ী স্বতন্ত্র জেলা' },
     { ico: ICONS.school,val: toBn(institutions), lbl: 'প্রতিষ্ঠান', sub: 'স্বতন্ত্র প্রতিষ্ঠান' }
   ];
 
   $('#statsGrid').innerHTML = cards.map(c => `
-    <div class="stat">
+    <div class="stat${c.flag ? ' stat-flag' : ''}">
       <div class="ico">${c.ico}</div>
       <div class="body">
         <div class="val">${esc(c.val)}</div>
@@ -1354,7 +1652,7 @@ function renderAnalytics(){
   if (!rows.length){ $('#analyticsGrid').innerHTML = ''; return; }
   const groupDist  = distribution(rows, F.group, 6);
   const genderDist = distribution(rows, F.gender, 4);
-  const distDist   = distribution(rows, F.pDistrict, 6);
+  const distDist   = distribution(rows, F.district, 6);
   const total = rows.length || 1;
   const bar = (label, count, pct, cls) => `
     <div class="bar-row">
@@ -1368,17 +1666,32 @@ function renderAnalytics(){
         ${items.map(([label, count]) => bar(label, count, Math.round(count / total * 100), cls)).join('')}
       </div>
     </div>`;
+
+  /* ★ Flagged-group breakdown card */
+  const flaggedRows = rows.filter(isFlagged);
+  const flagCard = flaggedRows.length ? `
+    <div class="acard">
+      <h3>${ICONS.bookmarkFill}ফ্ল্যাগ করা এন্ট্রির গ্রুপ বিভাজন</h3>
+      <div class="bars">
+        ${distribution(flaggedRows, F.group, 6)
+            .map(([label, count]) => bar(label, count, Math.round(count / (flaggedRows.length || 1) * 100), 'gold'))
+            .join('')}
+      </div>
+    </div>` : '';
+
   $('#analyticsGrid').innerHTML =
     block('গ্রুপ অনুযায়ী বিভাজন', ICONS.grid, groupDist, '') +
     block('লিঙ্গ বিভাজন', ICONS.gender, genderDist, 'g2') +
-    block('শীর্ষ জেলা', ICONS.pin, distDist, 'g3');
+    block('শীর্ষ স্থায়ী জেলা', ICONS.pin, distDist, 'g3') +
+    flagCard;
 }
 
 /* ==========================================================================
    RENDER: TABLE
    ========================================================================== */
 function thumbHtml(row){
-  const url = String(F.photo(row) || '').trim();
+  const raw = String(F.photo(row) || '').trim();
+  const url = resolveImage(raw, 120);
   const ini = initials(F.name(row));
   if (url){
     return `<div class="thumb-wrap">
@@ -1394,17 +1707,30 @@ function statusBadge(row){
   const meta = statusMeta(kind);
   return `<span class="badge ${meta.cls}">${esc(meta.label)}</span>`;
 }
+/* ★ Bookmark toggle rendered inline in the table */
+function flagButtonHtml(row, idx){
+  const on = isFlagged(row);
+  const cid = String(F.id(row) || '').trim();
+  const busy = !!(cid && state.updating.has('flag:' + cid));
+  return `<button class="flagbtn${on ? ' on' : ''}" type="button"
+            data-flag-toggle="${idx}"
+            aria-pressed="${on ? 'true' : 'false'}"
+            ${busy ? 'disabled' : ''}
+            title="${on ? 'রিভিউ ফ্ল্যাগ সরান' : 'অভ্যন্তরীণ রিভিউয়ের জন্য চিহ্নিত করুন'}">
+      ${on ? ICONS.bookmarkFill : ICONS.bookmark}${on ? '<span>Flagged</span>' : ''}
+    </button>`;
+}
 function renderTable(){
   const tbody = $('#tbody');
   const footer = $('#tableFooter');
   if (state.loading){
-    tbody.innerHTML = `<tr><td colspan="11"><div class="loader"><i></i><span>রেজিস্ট্রেশন লোড হচ্ছে…</span></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="12"><div class="loader"><i></i><span>রেজিস্ট্রেশন লোড হচ্ছে…</span></div></td></tr>`;
     footer.innerHTML = '';
     return;
   }
   const total = state.filtered.length;
   if (!total){
-    tbody.innerHTML = `<tr><td colspan="11">
+    tbody.innerHTML = `<tr><td colspan="12">
       <div class="empty-state">
         ${ICONS.search}
         <h3>কোনো রেকর্ড পাওয়া যায়নি</h3>
@@ -1425,22 +1751,26 @@ function renderTable(){
     const gk = [gv, kl].filter(Boolean).join(' · ') || '—';
     const amt = F.amount(row);
     const amtTxt = amt === '' ? '—' : (/[0-9]/.test(String(amt)) ? '৳ ' + toBn(esc(String(amt))) : esc(String(amt)));
-    return `<tr data-idx="${idx}">
+    const mobileTxt = formatMobile(F.mobile(row));
+    const districtTxt = F.district(row);
+    const flagged = isFlagged(row);
+    return `<tr class="${flagged ? 'flagged' : ''}" data-idx="${idx}">
       <td class="sl">${toBn(idx + 1)}</td>
       <td>${thumbHtml(row)}</td>
+      <td style="text-align:center">${flagButtonHtml(row, idx)}</td>
       <td class="mono">${esc(F.id(row) || '—')}</td>
       <td>
         <div class="cellname">
           <div style="min-width:0">
             <div class="nm">${esc(name)}</div>
-            <div class="sub">${esc(F.gender(row) || '')}${F.gender(row) && F.mobile(row) ? ' · ' : ''}${esc(F.mobile(row) || '')}</div>
+            <div class="sub">${esc(F.gender(row) || '')}${F.gender(row) && mobileTxt ? ' · ' : ''}${esc(mobileTxt)}</div>
           </div>
         </div>
       </td>
       <td>${esc(gk)}</td>
       <td><span class="trunc" title="${escAttr(F.institution(row))}">${esc(F.institution(row) || '—')}</span></td>
-      <td>${esc(F.pDistrict(row) || '—')}</td>
-      <td class="mono">${esc(F.mobile(row) || '—')}</td>
+      <td>${esc(districtTxt || '—')}</td>
+      <td class="mono">${esc(mobileTxt || '—')}</td>
       <td style="font-weight:600;white-space:nowrap;color:var(--green-dark)">${amtTxt}</td>
       <td>${statusBadge(row)}</td>
       <td style="text-align:right">
@@ -1460,10 +1790,15 @@ function renderTable(){
   for (let p = p1; p <= p2; p++){
     numHtml += `<button class="pgbtn ${p === state.page ? 'on' : ''}" data-page="${p}" type="button">${toBn(p)}</button>`;
   }
+  const flaggedInView = state.filtered.filter(isFlagged).length;
   footer.innerHTML = `<div class="pager">
-    <div><b style="color:var(--green-dark)">${toBn(from)}–${toBn(to)}</b> দেখানো হচ্ছে, মোট <b style="color:var(--green-dark)">${toBn(total)}</b> টির মধ্যে${
-      state.rows.length !== total ? ` <span style="opacity:.7">(ফিল্টার করা ${toBn(state.rows.length)} থেকে)</span>` : ''
-    }</div>
+    <div>
+      <b style="color:var(--green-dark)">${toBn(from)}–${toBn(to)}</b> দেখানো হচ্ছে, মোট <b style="color:var(--green-dark)">${toBn(total)}</b> টির মধ্যে${
+        state.rows.length !== total ? ` <span style="opacity:.7">(ফিল্টার করা ${toBn(state.rows.length)} থেকে)</span>` : ''
+      }${
+        flaggedInView ? ` · <span style="color:var(--gold-deep);font-weight:700">🔖 ${toBn(flaggedInView)} টি ফ্ল্যাগ করা</span>` : ''
+      }
+    </div>
     <div class="grp">
       <button class="pgbtn" data-page="prev" type="button" ${state.page === 1 ? 'disabled' : ''}>‹ পূর্ববর্তী</button>
       <div class="pgnum">${numHtml}</div>
@@ -1478,20 +1813,32 @@ function renderAll(){
 }
 
 /* ==========================================================================
-   VIDEO PLAYER — FIXED
-   --------------------------------------------------------------------------
-   ★★★ পূর্বের বাগ: video element-এ src attribute সেট করা ছিল না।
-       Play করার সময় dynamic ভাবে v.src = url + v.load() + v.play()
-       — এই sequence কিছু ব্রাউজারে reject হয়।
-       ★ ফিক্স: src সরাসরি HTML-এ সেট করা হয়েছে, load() কল করা হয় না,
-         শুধু play() কল করা হয়। ব্রাউজার নিজেই load শুরু করে।
+   VIDEO PLAYER
    ========================================================================== */
 function createPlayer(src, poster){
+  const info = resolveVideo(src);
   const el = document.createElement('div');
   el.className = 'vp';
-  // ★ src সরাসরি video element-এ সেট করা হয়েছে (lazy / dynamic नয়)
+  el.destroy = function(){};
+
+  if (!info){
+    el.innerHTML = `<div class="vp-err"><div>ভিডিও লিংক পাওয়া যায়নি</div></div>`;
+    return el;
+  }
+
+  if (info.kind === 'youtube'){
+    el.innerHTML = `<iframe class="vp-frame" src="${escAttr(info.embed)}" title="ভিডিও"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen loading="lazy"></iframe>`;
+    el.destroy = function(){ el.innerHTML = ''; };
+    return el;
+  }
+
+  const startSrc = info.direct;
+  const posterUrl = poster ? resolveImage(poster, 800) : '';
+
   el.innerHTML = `
-    <video class="vp-video" playsinline preload="none"${poster ? ` poster="${escAttr(poster)}"` : ''} src="${escAttr(src)}"></video>
+    <video class="vp-video" playsinline preload="metadata"${posterUrl ? ` poster="${escAttr(posterUrl)}"` : ''} src="${escAttr(startSrc)}"></video>
     <button class="vp-big" type="button" aria-label="চালান">
       <svg viewBox="0 0 24 24" width="34" height="34"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
     </button>
@@ -1499,7 +1846,7 @@ function createPlayer(src, poster){
     <div class="vp-err" hidden>
       <div>ভিডিও চালানো যাচ্ছে না।</div>
       <span>লিংকটি ভাঙা বা ফাইলটি অনুপলব্ধ হতে পারে।</span>
-      <a href="${escAttr(src)}" target="_blank" rel="noopener">নতুন ট্যাবে খুলুন ↗</a>
+      <a href="${escAttr(startSrc)}" target="_blank" rel="noopener">নতুন ট্যাবে খুলুন ↗</a>
       <span class="err-code"></span>
     </div>
     <div class="vp-ui">
@@ -1533,16 +1880,41 @@ function createPlayer(src, poster){
   const errBox  = el.querySelector('.vp-err');
   const errCodeEl = el.querySelector('.err-code');
 
-  let dragging = false, hideTimer = null;
+  let dragging = false, hideTimer = null, fellBack = false, loadTimer = null;
   const RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
   let rateIdx = 2;
+
+  function useEmbed(reason){
+    if (fellBack || !info.embed) return;
+    fellBack = true;
+    console.warn('[Video] switching to embed preview —', reason);
+    try { v.pause(); v.removeAttribute('src'); v.load(); } catch(e){}
+    clearTimeout(loadTimer);
+    el.classList.remove('busy','playing','hide-ui');
+    el.innerHTML =
+      `<iframe class="vp-frame" src="${escAttr(info.embed)}" title="ভিডিও"
+         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+         allowfullscreen></iframe>
+       <div class="vp-note">Google Drive প্রিভিউ মোড</div>`;
+  }
+  el.useEmbedFallback = useEmbed;
+
+  function armDriveTimer(){
+    if (info.kind !== 'drive' || fellBack) return;
+    clearTimeout(loadTimer);
+    loadTimer = setTimeout(() => {
+      if (!fellBack && v.readyState < 2) useEmbed('timeout (' + v.readyState + ')');
+    }, 9000);
+  }
 
   function play(){
     const p = v.play();
     if (p && p.catch) p.catch(err => {
       console.warn('[Video] play() rejected:', err && err.message);
       el.classList.remove('busy');
+      if (info.embed) useEmbed('play() rejected');
     });
+    armDriveTimer();
   }
   function toggle(){ if (v.paused) play(); else v.pause(); }
 
@@ -1617,6 +1989,7 @@ function createPlayer(src, poster){
   v.addEventListener('loadedmetadata', () => {
     dur.textContent = fmtTime(v.duration);
     el.classList.remove('busy');
+    clearTimeout(loadTimer);
   });
   v.addEventListener('timeupdate', () => {
     if (!isFinite(v.duration) || v.duration <= 0) return;
@@ -1650,23 +2023,20 @@ function createPlayer(src, poster){
   v.addEventListener('error', () => {
     el.classList.remove('busy');
     const err = v.error;
-    const codeMap = {
-      1: 'MEDIA_ERR_ABORTED',
-      2: 'MEDIA_ERR_NETWORK',
-      3: 'MEDIA_ERR_DECODE',
-      4: 'MEDIA_ERR_SRC_NOT_SUPPORTED'
-    };
+    const codeMap = { 1:'MEDIA_ERR_ABORTED', 2:'MEDIA_ERR_NETWORK', 3:'MEDIA_ERR_DECODE', 4:'MEDIA_ERR_SRC_NOT_SUPPORTED' };
     const code = err ? err.code : 0;
     const codeName = codeMap[code] || 'UNKNOWN';
-    console.warn('[Video] error event:', codeName, '| src:', src, '| networkState:', v.networkState);
-    if (errCodeEl) errCodeEl.textContent = codeName + (code === 4 ? ' (server may be sending wrong Content-Type)' : '');
+    console.warn('[Video] error event:', codeName, '| src:', startSrc, '| networkState:', v.networkState);
+    if (info.embed){ useEmbed(codeName); return; }
+    if (errCodeEl) errCodeEl.textContent = codeName;
     errBox.hidden = false;
   });
 
   el.destroy = function(){
+    clearTimeout(loadTimer);
     try { v.pause(); } catch(e){}
-    v.removeAttribute('src');
-    try { v.load(); } catch(e){}
+    try { v.removeAttribute('src'); v.load(); } catch(e){}
+    el.innerHTML = '';
   };
 
   return el;
@@ -1684,6 +2054,8 @@ function infoCard(title, icon, items){
       html = esc(fmtDateTime(value));
     } else if (type === 'link'){
       html = `<a href="${escAttr(value)}" target="_blank" rel="noopener">${esc(shortUrl(value, 46))}</a>`;
+    } else if (type === 'html'){
+      html = value;
     } else {
       html = esc(value);
     }
@@ -1692,6 +2064,50 @@ function infoCard(title, icon, items){
   return `<section class="card">
     <h4>${icon}${esc(title)}</h4>
     <div class="info-list">${body}</div>
+  </section>`;
+}
+
+function paymentCard(row){
+  const shotRaw = String(F.payShot(row) || '').trim();
+  const shotUrl = shotRaw ? resolveImage(shotRaw, 1600) : '';
+  const amt = F.amount(row);
+
+  const items = [
+    ['পেমেন্ট মাধ্যম', F.payMethod(row)],
+    ['ট্রানজেকশন আইডি', F.trxId(row)],
+    ['পরিমাণ', amt ? '৳ ' + amt : ''],
+    ['প্রেরকের মোবাইল', formatMobile(F.payerMobile(row))]
+  ];
+
+  const rowsHtml = items.map(([label, value]) => {
+    const html = (value === '' || value === undefined || value === null)
+      ? `<span class="empty">—</span>`
+      : esc(value);
+    return `<div class="ir"><span class="il">${esc(label)}</span><span class="iv">${html}</span></div>`;
+  }).join('');
+
+  const shotHtml = shotUrl ? `
+    <div>
+      <div class="shot-label">${ICONS.receipt} পেমেন্ট স্ক্রিনশট</div>
+      <div class="shot-box" data-zoom="${escAttr(shotUrl)}" role="button" tabindex="0" title="বড় করে দেখতে ক্লিক করুন">
+        <img src="${escAttr(shotUrl)}" alt="পেমেন্ট স্ক্রিনশট" loading="lazy"
+             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','&lt;div class=&quot;noimg&quot;&gt;স্ক্রিনশট লোড করা যায়নি&lt;/div&gt;')">
+        <div class="shot-overlay">🔍 বড় করে দেখুন</div>
+      </div>
+      <a class="btn" style="margin-top:10px;width:100%;justify-content:center"
+         href="${escAttr(shotUrl)}" target="_blank" rel="noopener">${ICONS.eye} নতুন ট্যাবে খুলুন</a>
+    </div>` : `
+    <div>
+      <div class="shot-label">${ICONS.receipt} পেমেন্ট স্ক্রিনশট</div>
+      <div class="shot-empty">পেমেন্ট স্ক্রিনশট আপলোড করা হয়নি</div>
+    </div>`;
+
+  return `<section class="card card-full">
+    <h4>${ICONS.card}পেমেন্ট তথ্য</h4>
+    <div class="pay-wrap">
+      <div class="info-list">${rowsHtml}</div>
+      ${shotHtml}
+    </div>
   </section>`;
 }
 
@@ -1709,8 +2125,10 @@ function renderActionBar(row){
   const kind = classifyStatus(row);
   const bar = $('#actionBar');
   const cid = String(F.id(row) || '').trim();
-  const busy = cid && state.updating.has(cid);
+  const busy = !!(cid && state.updating.has(cid));
+  const busyFlag = !!(cid && state.updating.has('flag:' + cid));
   const apiReady = apiConfigured();
+  const flagged = isFlagged(row);
 
   const statusLabel = kind === 'approved' ? '✓ বর্তমান স্ট্যাটাস: অনুমোদিত'
                     : kind === 'rejected' ? '✕ বর্তমান স্ট্যাটাস: বাতিল'
@@ -1718,9 +2136,19 @@ function renderActionBar(row){
 
   const spinner = `<span class="spin"></span>`;
 
-  let buttons = '';
+  /* ★★★ Review Flag toggle — available in every status state ★★★ */
+  const flagBtn = `
+    <button class="action-btn flag${flagged ? ' on' : ''}" data-action="toggle-flag" type="button"
+            ${busyFlag ? 'disabled' : ''}
+            aria-pressed="${flagged ? 'true' : 'false'}"
+            title="${flagged ? 'রিভিউ ফ্ল্যাগ সরান' : 'অভ্যন্তরীণ মূল্যায়নের জন্য চিহ্নিত করুন'}">
+      ${busyFlag ? spinner : (flagged ? ICONS.bookmarkFill : ICONS.bookmark)}
+      ${busyFlag ? 'আপডেট হচ্ছে…' : (flagged ? 'Flagged ✓' : 'Mark for Review')}
+    </button>`;
+
+  let statusButtons = '';
   if (kind === 'pending'){
-    buttons = `
+    statusButtons = `
       <button class="action-btn approve" data-action="approve" type="button" ${busy ? 'disabled' : ''}>
         ${busy ? spinner : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'}
         ${busy ? 'আপডেট হচ্ছে…' : 'Accept / Approve'}
@@ -1730,7 +2158,7 @@ function renderActionBar(row){
         Reject / Cancel
       </button>`;
   } else if (kind === 'approved'){
-    buttons = `
+    statusButtons = `
       <button class="action-btn notify" data-action="notify" data-stage="1" type="button" ${busy ? 'disabled' : ''}>
         ${ICONS.check}
         Stage ১ — অনুমোদন বার্তা
@@ -1744,7 +2172,7 @@ function renderActionBar(row){
         Reject
       </button>`;
   } else {
-    buttons = `
+    statusButtons = `
       <button class="action-btn approve" data-action="approve" type="button" ${busy ? 'disabled' : ''}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         Re-approve
@@ -1763,7 +2191,8 @@ function renderActionBar(row){
 
   bar.innerHTML = `
     <div class="status-info ${kind}"><span class="sdot"></span><span>${esc(statusLabel)}</span></div>
-    ${buttons}
+    ${flagBtn}
+    ${statusButtons}
     ${apiWarn}`;
 }
 
@@ -1774,9 +2203,11 @@ function openDetail(filteredIndex){
   state.currentRow = row;
 
   const name  = F.name(row) || 'নাম নেই';
-  const photo = String(F.photo(row) || '').trim();
+  const photoRaw = String(F.photo(row) || '').trim();
+  const photo = photoRaw ? resolveImage(photoRaw, 1000) : '';
   const video = String(F.video(row) || '').trim();
   const ini   = initials(name);
+  const flagged = isFlagged(row);
 
   $('#modalHead').innerHTML = `
     <div class="who">
@@ -1790,6 +2221,7 @@ function openDetail(filteredIndex){
           ${F.id(row) ? `<span class="chip id">${esc(F.id(row))}</span>` : ''}
           ${F.group(row) ? `<span class="chip">গ্রুপ ${esc(F.group(row))}</span>` : ''}
           ${F.klass(row) ? `<span class="chip">${esc(F.klass(row))}</span>` : ''}
+          ${flagged ? `<span class="chip flag-chip">${ICONS.bookmarkFill} Flagged</span>` : ''}
           ${statusBadge(row)}
         </div>
       </div>
@@ -1800,6 +2232,7 @@ function openDetail(filteredIndex){
       <button class="iconbtn" data-close title="বন্ধ করুন (Esc)">${ICONS.x}</button>
     </div>`;
 
+  $('#modal').classList.toggle('is-flagged', flagged);
   renderActionBar(row);
 
   const photoBlock = `
@@ -1825,11 +2258,17 @@ function openDetail(filteredIndex){
       </div>` : ''}
     </section>`;
 
+  const flagValueHtml = flagged
+    ? `<span class="flag-yes">${ICONS.bookmarkFill} চিহ্নিত (Flagged)</span>`
+    : `<span class="empty">চিহ্নিত নয়</span>`;
+
   const sections = [
     infoCard('আবেদনের তথ্য', ICONS.idcard, [
       ['সময়', F.timestamp(row), 'date'],
       ['প্রতিযোগী আইডি', F.id(row)],
       ['স্ট্যাটাস', statusMeta(classifyStatus(row)).label],
+      /* ★ Review flag surfaced in the info list too */
+      ['রিভিউ ফ্ল্যাগ', flagValueHtml, 'html'],
       ['মন্তব্য', F.comment(row)]
     ]),
     infoCard('ব্যক্তিগত তথ্য', ICONS.user, [
@@ -1846,8 +2285,8 @@ function openDetail(filteredIndex){
       ['প্রতিষ্ঠান', F.institution(row)]
     ]),
     infoCard('যোগাযোগ', ICONS.phone, [
-      ['মোবাইল', F.mobile(row)],
-      ['হোয়াটসঅ্যাপ', F.whatsapp(row)]
+      ['মোবাইল', formatMobile(F.mobile(row))],
+      ['হোয়াটসঅ্যাপ', formatMobile(F.whatsapp(row))]
     ]),
     infoCard('বর্তমান ঠিকানা', ICONS.pin, [
       ['জেলা', F.pDistrict(row)],
@@ -1860,15 +2299,9 @@ function openDetail(filteredIndex){
       ['গ্রাম / রোড', F.qRoad(row)]
     ]),
     infoCard('মিডিয়া লিংক', ICONS.video, [
-      ['ছবির URL', F.photo(row), 'link'],
-      ['ভিডিও URL', F.video(row), 'link'],
+      ['ছবির URL', photoRaw, 'link'],
+      ['ভিডিও URL', video, 'link'],
       ['ভিডিও আকার', F.videoSize(row) ? F.videoSize(row) + ' MB' : '']
-    ]),
-    infoCard('পেমেন্ট তথ্য', ICONS.card, [
-      ['পেমেন্ট মাধ্যম', F.payMethod(row)],
-      ['ট্রানজেকশন আইডি', F.trxId(row)],
-      ['পরিমাণ', F.amount(row) ? '৳ ' + F.amount(row) : ''],
-      ['প্রেরকের মোবাইল', F.payerMobile(row)]
     ])
   ];
 
@@ -1880,8 +2313,10 @@ function openDetail(filteredIndex){
     </div>
     <div class="detail-grid">${sections.join('')}</div>`;
 
+  body.querySelector('.detail-grid').insertAdjacentHTML('beforeend', paymentCard(row));
+
   if (video){
-    const player = createPlayer(video, photo || '');
+    const player = createPlayer(video, photoRaw || '');
     $('#playerMount').appendChild(player);
     state.player = player;
   } else {
@@ -1908,10 +2343,83 @@ function closeDetail(){
   $('#modalHead').innerHTML = '';
   $('#actionBar').innerHTML = '';
   modal.classList.remove('open');
+  modal.classList.remove('is-flagged');
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   state.currentIndex = -1;
   state.currentRow = null;
+}
+
+/* ==========================================================================
+   ★★★ REVIEW FLAG TOGGLE HANDLER ★★★
+   --------------------------------------------------------------------------
+   Optimistic UI: the badge/row flips instantly, then syncs to the sheet.
+   If the sync fails, the change is rolled back so the UI never lies.
+   Backend action expected:  { action:'updateReviewFlag', contestantId, reviewFlag:'Yes'|'No' }
+   ========================================================================== */
+async function toggleReviewFlag(row){
+  if (!row) return;
+  const cid = String(F.id(row) || '').trim();
+  if (!cid){
+    showToast('Contestant ID নেই — ফ্ল্যাগ করা যাবে না', 'error');
+    return;
+  }
+  const busyKey = 'flag:' + cid;
+  if (state.updating.has(busyKey)) return;
+
+  const wasFlagged = isFlagged(row);
+  const nextFlagged = !wasFlagged;
+  const key = flagKeyOf(row);
+
+  /* ---- optimistic apply ---- */
+  state.flagCache.set(cid, nextFlagged);
+  if (key) row.n[key] = nextFlagged ? 'Yes' : 'No';
+  state.updating.add(busyKey);
+
+  if (state.currentRow === row){
+    $('#modal').classList.toggle('is-flagged', nextFlagged);
+    renderActionBar(row);
+  }
+  renderAll();
+
+  try {
+    await postToAppsScript({
+      action: 'updateReviewFlag',
+      contestantId: cid,
+      reviewFlag: nextFlagged ? 'Yes' : 'No'
+    });
+    showToast(
+      nextFlagged
+        ? '🔖 "' + (F.name(row) || cid) + '" রিভিউয়ের জন্য চিহ্নিত করা হয়েছে'
+        : 'ফ্ল্যাগ সরানো হয়েছে — ' + (F.name(row) || cid),
+      'flag'
+    );
+  } catch (err){
+    /* ---- rollback ---- */
+    state.flagCache.set(cid, wasFlagged);
+    if (key) row.n[key] = wasFlagged ? 'Yes' : 'No';
+    if (state.currentRow === row){
+      $('#modal').classList.toggle('is-flagged', wasFlagged);
+      renderActionBar(row);
+    }
+    renderAll();
+
+    const backendMissing = /unknown|অজানা|unsupported|invalid action/i.test(err.message || '');
+    showToast(
+      backendMissing
+        ? 'ফ্ল্যাগ সংরক্ষণ ব্যর্থ — Apps Script এ "updateReviewFlag" অ্যাকশনটি এখনো যোগ করা হয়নি'
+        : 'ফ্ল্যাগ আপডেট ব্যর্থ: ' + err.message,
+      'error'
+    );
+  } finally {
+    state.updating.delete(busyKey);
+    if (state.currentRow === row) renderActionBar(row);
+    renderAll();
+  }
+}
+function toggleReviewFlagByIndex(filteredIndex){
+  const row = state.filtered[filteredIndex];
+  if (row) toggleReviewFlag(row);
 }
 
 /* ==========================================================================
@@ -1920,6 +2428,12 @@ function closeDetail(){
 async function handleAction(action, stage){
   const row = state.currentRow;
   if (!row) return;
+
+  /* ★ Review flag toggle */
+  if (action === 'toggle-flag'){
+    toggleReviewFlag(row);
+    return;
+  }
 
   if (action === 'notify'){
     openNotifyModal(row, stage || 1);
@@ -1958,7 +2472,6 @@ async function handleAction(action, stage){
 
     showToast('✓ স্ট্যাটাস আপডেট হয়েছে: ' + statusMeta(newKind).label, 'success');
 
-    // Approve → auto-open Stage 1 notification
     if (action === 'approve') openNotifyModal(row, 1);
 
   } catch (err){
@@ -2043,10 +2556,10 @@ function buildNotificationMessage(row, stage){
 }
 
 function toWaNumber(mobile){
-  const digits = String(mobile || '').replace(/\D/g, '');
+  const digits = formatMobile(mobile).replace(/\D/g, '');
   if (!digits) return '';
-  if (digits.startsWith('880')) return digits;
-  if (digits.startsWith('0'))   return '88' + digits;
+  if (digits.indexOf('880') === 0) return digits;
+  if (digits.charAt(0) === '0')    return '88' + digits;
   return '880' + digits;
 }
 
@@ -2058,12 +2571,10 @@ function setNotifyStage(stage, row){
   const r = row || state.currentRow;
   if (!r) return;
 
-  // Tabs active state
   $$('#notifyStageTabs .notify-stage-tab').forEach(t => {
     t.classList.toggle('active', parseInt(t.dataset.stage, 10) === stage);
   });
 
-  // Header
   const icon = $('#notifyIcon');
   const title = $('#notifyTitle');
   const subtitle = $('#notifySubtitle');
@@ -2083,7 +2594,6 @@ function setNotifyStage(stage, row){
     msgLabel.textContent = 'Stage ১ — অনুমোদন বার্তা (সম্পাদনাযোগ্য)';
   }
 
-  // Message body
   $('#notifyMessage').value = buildNotificationMessage(r, stage);
   updateNotifyLinks();
 }
@@ -2091,9 +2601,9 @@ function setNotifyStage(stage, row){
 function openNotifyModal(row, stage){
   if (!row) return;
   const name   = F.name(row) || 'নাম নেই';
-  const photo  = String(F.photo(row) || '').trim();
-  const mobile = F.mobile(row) || F.whatsapp(row) || F.payerMobile(row) || '';
-  const mobileClean = String(mobile).replace(/\D/g, '');
+  const photoRaw = String(F.photo(row) || '').trim();
+  const photo  = photoRaw ? resolveImage(photoRaw, 160) : '';
+  const mobile = formatMobile(F.mobile(row) || F.whatsapp(row) || F.payerMobile(row) || '');
   const ini = initials(name);
 
   $('#notifyRecipient').innerHTML = `
@@ -2105,11 +2615,12 @@ function openNotifyModal(row, stage){
       <div class="rname">${esc(name)}</div>
       <div class="rmeta">
         ${F.id(row) ? `<span>🆔 <b>${esc(F.id(row))}</b></span>` : ''}
-        ${mobileClean ? `<span>📞 <b>${esc(mobileClean)}</b></span>` : ''}
+        ${mobile ? `<span>📞 <b>${esc(mobile)}</b></span>` : ''}
+        ${isFlagged(row) ? `<span>🔖 <b>Flagged</b></span>` : ''}
       </div>
     </div>`;
 
-  $('#notifyMobile').value = mobileClean;
+  $('#notifyMobile').value = mobile;
 
   const copyBtn = $('#notifyCopyBtn');
   copyBtn.classList.remove('done');
@@ -2134,7 +2645,7 @@ function closeNotifyModal(){
 
 function updateNotifyLinks(){
   const rawMobile = $('#notifyMobile').value.trim();
-  const digits = rawMobile.replace(/\D/g, '');
+  const digits = formatMobile(rawMobile).replace(/\D/g, '');
   const message = $('#notifyMessage').value;
   const encoded = encodeURIComponent(message);
 
@@ -2190,6 +2701,7 @@ async function copyNotifyMessage(){
    LIGHTBOX
    ========================================================================== */
 function openLightbox(src){
+  if (!src) return;
   $('#lightboxImg').src = src;
   $('#lightbox').classList.add('open');
 }
@@ -2237,6 +2749,12 @@ function bindUI(){
   $('#fGroup').addEventListener('change', e => { state.group = e.target.value; applyFilters(); });
   $('#fDistrict').addEventListener('change', e => { state.district = e.target.value; applyFilters(); });
   $('#fStatus').addEventListener('change', e => { state.status = e.target.value; applyFilters(); });
+  /* ★ Flag filter */
+  $('#fFlag').addEventListener('change', e => {
+    state.flag = e.target.value;
+    e.target.classList.toggle('flagged-active', !!state.flag);
+    applyFilters();
+  });
   $('#fSize').addEventListener('change', e => {
     state.pageSize = parseInt(e.target.value, 10) || 25;
     state.page = 1;
@@ -2258,6 +2776,13 @@ function bindUI(){
   });
 
   $('#tbody').addEventListener('click', e => {
+    /* ★ Inline bookmark toggle takes priority over row-click */
+    const flagBtn = e.target.closest('[data-flag-toggle]');
+    if (flagBtn && !flagBtn.disabled){
+      e.stopPropagation();
+      toggleReviewFlagByIndex(parseInt(flagBtn.dataset.flagToggle, 10));
+      return;
+    }
     const btn = e.target.closest('[data-manage]');
     if (btn){ openDetail(parseInt(btn.dataset.manage, 10)); return; }
     const tr = e.target.closest('tr[data-idx]');
@@ -2289,10 +2814,19 @@ function bindUI(){
 
   $('#modalBody').addEventListener('click', e => {
     const box = e.target.closest('[data-zoom]');
-    if (box) openLightbox(box.dataset.zoom);
+    if (box){
+      e.stopPropagation();
+      openLightbox(box.dataset.zoom);
+    }
+  });
+  $('#modalBody').addEventListener('keydown', e => {
+    const box = e.target.closest('[data-zoom]');
+    if (box && (e.key === 'Enter' || e.key === ' ')){
+      e.preventDefault();
+      openLightbox(box.dataset.zoom);
+    }
   });
 
-  /* Notify modal events */
   $('#notifyModal').addEventListener('click', e => {
     if (e.target.closest('[data-notify-close]')) closeNotifyModal();
   });
@@ -2333,6 +2867,13 @@ function bindUI(){
 
     const tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+    /* ★ 'B' toggles the review flag for the open record */
+    if (e.key.toLowerCase() === 'b' && !e.ctrlKey && !e.metaKey && !e.altKey){
+      e.preventDefault();
+      if (state.currentRow) toggleReviewFlag(state.currentRow);
+      return;
+    }
 
     const v = state.player ? state.player.querySelector('video') : null;
 
