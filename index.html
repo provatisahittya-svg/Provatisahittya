@@ -133,7 +133,7 @@ body::after{
 /* ============ STATS ============ */
 .stats{
   display:grid;gap:14px;margin-bottom:18px;
-  grid-template-columns:repeat(auto-fit,minmax(232px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 }
 .stat{
   position:relative;overflow:hidden;
@@ -174,6 +174,15 @@ body::after{
   box-shadow:0 5px 14px rgba(212,160,23,.35), inset 0 1px 0 rgba(255,255,255,.22);
 }
 .stat.stat-flag .val{color:var(--gold-deep)}
+
+/* ★ Fee stat card variant — approved-only */
+.stat.stat-fee::before{background:linear-gradient(90deg,var(--green-dark),var(--green),var(--green-light));opacity:1}
+.stat.stat-fee .ico{
+  background:linear-gradient(135deg,#1B5E20,#2E8B57);
+  border-color:#0D3D14;
+  box-shadow:0 5px 14px rgba(27,94,32,.4), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.stat.stat-fee .val{color:#0D3D14}
 
 /* ============ ANALYTICS ============ */
 .analytics{
@@ -231,7 +240,7 @@ body::after{
 .search input:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 4px rgba(46,139,87,.14)}
 .search input::placeholder{color:rgba(107,123,110,.7)}
 select.sel{
-  font:inherit;font-size:13px;color:var(--text-body);background:rgba(253,254,251,.95);
+  font:inherit;font-size:12px;color:var(--text-body);background:rgba(253,254,251,.95);
   border:1px solid rgba(46,139,87,.22);border-radius:12px;padding:10px 34px 10px 12px;outline:none;cursor:pointer;
   max-width:200px;appearance:none;
   background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232E8B57' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
@@ -240,7 +249,6 @@ select.sel{
 }
 select.sel:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(46,139,87,.14);background-color:#fff}
 select.sel option{background:#fff;color:var(--text-body)}
-/* ★ Flag filter gets a gold accent when active */
 select.sel.flagged-active{
   border-color:var(--gold);
   background-color:rgba(255,249,230,.95);
@@ -261,7 +269,6 @@ thead th.sortable:hover{color:var(--orange);background:linear-gradient(180deg,rg
 thead th .arw{opacity:.4;font-size:9px;margin-left:3px}
 thead th.on{color:var(--orange)}
 thead th.on .arw{opacity:1}
-/* ★ Flag column header accent */
 thead th.th-flag{text-align:center;color:var(--gold-deep)}
 thead th.th-flag:hover{color:var(--gold);background:linear-gradient(180deg,rgba(255,243,224,.95),rgba(255,252,240,.9))}
 thead th.th-flag.on{color:var(--gold)}
@@ -273,7 +280,6 @@ tbody td{padding:10px 13px;vertical-align:middle;color:var(--text-body)}
 td.sl{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px;width:46px}
 td.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:var(--green-dark);white-space:nowrap;font-weight:600}
 
-/* ★★★ FLAGGED ROW HIGHLIGHT ★★★ */
 tbody tr.flagged{
   background:linear-gradient(90deg, rgba(255,224,178,.5) 0%, rgba(255,249,230,.28) 45%, rgba(255,252,240,.1) 100%);
 }
@@ -287,7 +293,6 @@ tbody tr.flagged td:first-child{
 }
 tbody tr.flagged td.sl{color:var(--gold-deep)}
 
-/* ★ Bookmark toggle button in the table */
 .flagbtn{
   display:inline-flex;align-items:center;justify-content:center;gap:5px;
   font:inherit;font-size:11px;font-weight:700;cursor:pointer;
@@ -314,7 +319,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
 }
 .flagbtn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
 
-/* ★ Flag chip used in modal header */
 .chip.flag-chip{
   color:#7A4F00;
   background:linear-gradient(135deg,rgba(255,243,224,.98),rgba(255,224,178,.8));
@@ -416,7 +420,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
   content:"";position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--green),var(--orange-light),var(--green));opacity:.95;
 }
-/* ★ Gold top bar when the record is flagged */
 .modal.is-flagged .modal-head::before{
   background:linear-gradient(90deg,var(--gold),var(--orange-light),var(--gold));
   opacity:1;
@@ -442,7 +445,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
 .iconbtn svg{width:16px;height:16px}
 .iconbtn:disabled{opacity:.32;cursor:not-allowed}
 
-/* Action bar */
 .action-bar{
   display:flex;gap:10px;flex-wrap:wrap;align-items:center;
   padding:12px 20px;
@@ -497,7 +499,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
 }
 .action-btn.notify2:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 22px rgba(230,126,34,.45);filter:brightness(1.05)}
 
-/* ★★★ REVIEW FLAG TOGGLE BUTTON ★★★ */
 .action-btn.flag{
   color:#7A4F00;
   background:rgba(255,255,255,.94);
@@ -573,7 +574,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
 .iv .flag-yes svg{width:11px;height:11px}
 .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
 
-/* ---- Payment card (info + screenshot preview) ---- */
 .card-full{grid-column:1/-1}
 .pay-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,290px);gap:16px;align-items:start}
 @media(max-width:760px){.pay-wrap{grid-template-columns:1fr}}
@@ -602,13 +602,20 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
   border:1px dashed var(--line);border-radius:12px;background:rgba(255,255,255,.5);
 }
 
-/* ============ VIDEO PLAYER ============ */
+/* ============ VIDEO PLAYER ★★★ SHARPNESS-OPTIMIZED ★★★ ============ */
 .vp{
   position:relative;width:100%;aspect-ratio:16/9;background:#0d1a0f;border-radius:13px;
-  overflow:hidden;user-select:none;border:1px solid rgba(46,139,87,.35);
-  box-shadow:inset 0 0 60px rgba(0,0,0,.4);
+  overflow:hidden;user-select:none;
+  /* ★ Removed heavy inset vignette (was rgba(0,0,0,.4) 60px) — it darkened edges and reduced apparent clarity */
+  border:1px solid rgba(46,139,87,.35);
+  box-shadow:0 6px 18px rgba(13,26,15,.28);
 }
-.vp-video{width:100%;height:100%;object-fit:contain;display:block;background:#0d1a0f}
+.vp-video{
+  width:100%;height:100%;object-fit:contain;display:block;background:#0d1a0f;
+  /* ★ Subtle contrast/brightness lift — sharpens perceived clarity without distortion */
+  filter:contrast(1.04) brightness(1.02) saturate(1.03);
+  image-rendering:-webkit-optimize-contrast;
+}
 .vp-frame{width:100%;height:100%;border:0;display:block;background:#0d1a0f}
 .vp-big{
   position:absolute;inset:0;margin:auto;width:74px;height:74px;border-radius:50%;
@@ -706,7 +713,6 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
 .notify-close:hover{background:rgba(255,235,238,.9);border-color:var(--danger);color:var(--danger)}
 .notify-close svg{width:15px;height:15px}
 
-/* Stage tabs */
 .notify-stage-tabs{
   display:grid;grid-template-columns:1fr 1fr;gap:8px;
   padding:12px 20px 4px;
@@ -779,6 +785,14 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
   display:flex;align-items:center;gap:6px;
 }
 .nfield label .req{color:var(--danger)}
+.nfield label .wa-badge{
+  font-size:10.5px;font-weight:700;color:#0E7A37;
+  background:rgba(37,211,102,.14);
+  border:1px solid rgba(37,211,102,.4);
+  padding:2px 8px;border-radius:99px;
+  display:inline-flex;align-items:center;gap:4px;
+  margin-left:auto;
+}
 .nfield input,.nfield textarea{
   width:100%;font:inherit;font-size:13.5px;color:var(--text-body);
   background:rgba(253,254,251,.95);border:1px solid rgba(46,139,87,.25);
@@ -928,6 +942,7 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
   .toast-wrap{top:14px;right:14px;left:14px;max-width:none}
 }
 @media(max-width:520px){
+  .stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
   .stat{flex-direction:row;padding:12px;gap:11px}
   .stat .ico{width:38px;height:38px;border-radius:11px}
   .stat .ico svg{width:17px;height:17px}
@@ -1086,7 +1101,10 @@ tbody tr.flagged td.sl{color:var(--gold-deep)}
       <div class="recipient" id="notifyRecipient"></div>
 
       <div class="nfield">
-        <label>প্রাপকের মোবাইল নম্বর <span class="req">*</span></label>
+        <label>
+          প্রাপকের WhatsApp নম্বর <span class="req">*</span>
+          <span class="wa-badge" id="waBadge">✓ WhatsApp নম্বর</span>
+        </label>
         <input type="tel" id="notifyMobile" inputmode="numeric" maxlength="14" placeholder="01XXXXXXXXX" />
       </div>
 
@@ -1168,7 +1186,6 @@ const ICONS = {
   grid:   SVG('<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>'),
   search: SVG('<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'),
   star:   SVG('<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" fill="currentColor" stroke="none"/>'),
-  /* ★ Review flag icons */
   bookmark:     SVG('<path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>'),
   bookmarkFill: SVG('<path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" fill="currentColor" stroke="none"/>')
 };
@@ -1205,10 +1222,6 @@ function shortUrl(u, n){
   u = String(u||'');
   return u.length > (n||42) ? u.slice(0, (n||42)) + '…' : u;
 }
-
-/* --------------------------------------------------------------------------
-   ★ MOBILE NUMBER NORMALIZATION (leading zero restore)
-   -------------------------------------------------------------------------- */
 function formatMobile(v){
   if (v === null || v === undefined) return '';
   const raw = String(v).trim();
@@ -1219,6 +1232,164 @@ function formatMobile(v){
   else if (d.indexOf('88') === 0 && d.length > 11) d = d.slice(2);
   if (d.length === 10 && d.charAt(0) === '1') d = '0' + d;
   return d;
+}
+
+/* ==========================================================================
+   ★★★ ENGLISH → BENGALI AUTO-TRANSLITERATION (dashboard display) ★★★
+   --------------------------------------------------------------------------
+   Same logic as the submission form.
+   Applied ONLY at display time — raw values remain untouched for CSV/search.
+   ========================================================================== */
+const TL_CONSONANTS = {
+  'chh':'ছ','cch':'চ্ছ','kkh':'ক্ষ',
+  'kh':'খ','gh':'ঘ','ch':'চ','jh':'ঝ',
+  'th':'থ','dh':'ধ','ph':'ফ','bh':'ভ',
+  'sh':'শ','ss':'ষ','ng':'ং','ny':'ঞ',
+  'kr':'ক্র','pr':'প্র','br':'ব্র','tr':'ত্র',
+  'dr':'দ্র','gr':'গ্র','shr':'শ্র','str':'স্ট্র',
+  'k':'ক','g':'গ','c':'চ','j':'জ',
+  't':'ত','d':'দ','n':'ন',
+  'p':'প','b':'ব','m':'ম',
+  'y':'য','r':'র','l':'ল',
+  'v':'ভ','w':'ও','s':'স','h':'হ','f':'ফ',
+  'z':'জ','q':'ক','x':'ক্স'
+};
+const TL_VOWELS_STANDALONE = {
+  'aa':'আ','ai':'আই','au':'আউ',
+  'ee':'ঈ','ii':'ঈ','oo':'ঊ','uu':'ঊ',
+  'a':'আ','i':'ই','u':'উ','e':'এ','o':'ও'
+};
+const TL_VOWELS_SIGN = {
+  'aa':'া','ai':'ৈ','au':'ৌ',
+  'ee':'ী','ii':'ী','oo':'ূ','uu':'ূ',
+  'a':'া','i':'ি','u':'ু','e':'ে','o':'ো'
+};
+const TL_HASANTA = '\u09CD';
+
+function transliterateWord(word){
+  const text = String(word).toLowerCase();
+  const out = [];
+  let afterConsonant = false;
+  let i = 0;
+  while (i < text.length){
+    let matched = false;
+    for (let len = 3; len >= 1; len--){
+      if (i + len > text.length) continue;
+      const chunk = text.substr(i, len);
+      if (Object.prototype.hasOwnProperty.call(TL_CONSONANTS, chunk)){
+        if (afterConsonant) out.push(TL_HASANTA);
+        out.push(TL_CONSONANTS[chunk]);
+        afterConsonant = true;
+        i += len; matched = true; break;
+      }
+      if (Object.prototype.hasOwnProperty.call(TL_VOWELS_SIGN, chunk)){
+        if (afterConsonant) out.push(TL_VOWELS_SIGN[chunk]);
+        else out.push(TL_VOWELS_STANDALONE[chunk] || '');
+        afterConsonant = false;
+        i += len; matched = true; break;
+      }
+    }
+    if (!matched){
+      out.push(text[i]);
+      afterConsonant = false;
+      i++;
+    }
+  }
+  return out.join('');
+}
+
+function transliterateEnglishToBengali(input){
+  if (!input) return input;
+  const parts = String(input).split(/([^A-Za-z]+)/);
+  return parts.map(p => /[A-Za-z]/.test(p) ? transliterateWord(p) : p).join('');
+}
+
+const DISTRICT_EN_TO_BN = {
+  'dhaka':'ঢাকা','dacca':'ঢাকা',
+  'gazipur':'গাজীপুর',
+  'narayanganj':'নারায়ণগঞ্জ','narayangonj':'নারায়ণগঞ্জ',
+  'narsingdi':'নরসিংদী',
+  'munshiganj':'মুন্সিগঞ্জ','munshigonj':'মুন্সিগঞ্জ',
+  'manikganj':'মানিকগঞ্জ','manikgonj':'মানিকগঞ্জ',
+  'tangail':'টাঙ্গাইল',
+  'kishoreganj':'কিশোরগঞ্জ','kishorganj':'কিশোরগঞ্জ',
+  'faridpur':'ফরিদপুর',
+  'gopalganj':'গোপালগঞ্জ','gopalgonj':'গোপালগঞ্জ',
+  'madaripur':'মাদারীপুর',
+  'rajbari':'রাজবাড়ী',
+  'shariatpur':'শরীয়তপুর',
+  'chattogram':'চট্টগ্রাম','chittagong':'চট্টগ্রাম',
+  'coxsbazar':'কক্সবাজার',"cox's bazar":'কক্সবাজার','cox bazar':'কক্সবাজার',
+  'comilla':'কুমিল্লা','cumilla':'কুমিল্লা',
+  'brahmanbaria':'ব্রাহ্মণবাড়িয়া','brahmonbaria':'ব্রাহ্মণবাড়িয়া',
+  'chandpur':'চাঁদপুর',
+  'feni':'ফেনী',
+  'lakshmipur':'লক্ষ্মীপুর','laxmipur':'লক্ষ্মীপুর',
+  'noakhali':'নোয়াখালী',
+  'bandarban':'বান্দরবান',
+  'rangamati':'রাঙ্গামাটি',
+  'khagrachari':'খাগড়াছড়ি','khagrachhari':'খাগড়াছড়ি',
+  'rajshahi':'রাজশাহী',
+  'natore':'নাটোর',
+  'naogaon':'নওগাঁ',
+  'chapainawabganj':'চাঁপাইনবাবগঞ্জ','nawabganj':'চাঁপাইনবাবগঞ্জ',
+  'pabna':'পাবনা',
+  'sirajganj':'সিরাজগঞ্জ','sirajgonj':'সিরাজগঞ্জ',
+  'bogura':'বগুড়া','bogra':'বগুড়া',
+  'joypurhat':'জয়পুরহাট',
+  'khulna':'খুলনা',
+  'bagerhat':'বাগেরহাট',
+  'satkhira':'সাতক্ষীরা',
+  'jashore':'যশোর','jessore':'যশোর',
+  'jhenaidah':'ঝিনাইদহ','jhenidah':'ঝিনাইদহ',
+  'magura':'মাগুরা',
+  'narail':'নড়াইল',
+  'kushtia':'কুষ্টিয়া',
+  'chuadanga':'চুয়াডাঙ্গা',
+  'meherpur':'মেহেরপুর',
+  'barishal':'বরিশাল','barisal':'বরিশাল',
+  'patuakhali':'পটুয়াখালী',
+  'bhola':'ভোলা',
+  'pirojpur':'পিরোজপুর',
+  'barguna':'বরগুনা',
+  'jhalokati':'ঝালকাঠি','jhalokathi':'ঝালকাঠি',
+  'sylhet':'সিলেট',
+  'moulvibazar':'মৌলভীবাজার','maulvibazar':'মৌলভীবাজার',
+  'habiganj':'হবিগঞ্জ','habigonj':'হবিগঞ্জ',
+  'sunamganj':'সুনামগঞ্জ','sunamgonj':'সুনামগঞ্জ',
+  'rangpur':'রংপুর',
+  'dinajpur':'দিনাজপুর',
+  'thakurgaon':'ঠাকুরগাঁও',
+  'panchagarh':'পঞ্চগড়',
+  'nilphamari':'নীলফামারী',
+  'lalmonirhat':'লালমনিরহাট',
+  'kurigram':'কুড়িগ্রাম',
+  'gaibandha':'গাইবান্ধা',
+  'mymensingh':'ময়মনসিংহ','mymensing':'ময়মনসিংহ',
+  'jamalpur':'জামালপুর',
+  'netrokona':'নেত্রকোণা','netrakona':'নেত্রকোণা',
+  'sherpur':'শেরপুর'
+};
+
+function translateDistrictName(input){
+  const raw = String(input || '').trim();
+  if (!raw) return raw;
+  const cleaned = raw.toLowerCase().replace(/\s+/g, ' ').trim();
+  if (DISTRICT_EN_TO_BN[cleaned]) return DISTRICT_EN_TO_BN[cleaned];
+  const noSpace = cleaned.replace(/\s+/g, '');
+  if (DISTRICT_EN_TO_BN[noSpace]) return DISTRICT_EN_TO_BN[noSpace];
+  const first = cleaned.split(' ')[0];
+  if (DISTRICT_EN_TO_BN[first]) return DISTRICT_EN_TO_BN[first];
+  return transliterateEnglishToBengali(raw);
+}
+
+/* ★ Display-time converter: only converts when the text contains Latin letters */
+function bnDisplay(value, kind){
+  if (value === null || value === undefined) return value;
+  const v = String(value);
+  if (!v) return v;
+  if (!/[A-Za-z]/.test(v)) return v;   // already Bengali / numeric / mixed → untouched
+  return kind === 'district' ? translateDistrictName(v) : transliterateEnglishToBengali(v);
 }
 
 /* ==========================================================================
@@ -1283,7 +1454,7 @@ const state = {
   player: null,
   loading: true,
   statusCache: new Map(),
-  flagCache: new Map(),          /* ★ local optimistic flag overrides */
+  flagCache: new Map(),
   updating: new Set(),
   notifyStage: 1
 };
@@ -1328,11 +1499,18 @@ const F = {
   amount:      r => g(r,'amount','fee','paidamount'),
   payerMobile: r => g(r,'payermobile','payermobileno','sendermobile','payercontact'),
   status:      r => g(r,'status','paymentstatus','applicationstatus'),
-  /* ★★★ Review Flag — the new internal evaluation column ★★★ */
   reviewFlag:  r => g(r,'reviewflag','reviewmark','flag','shortlisted','shortlist','bookmark','marked','isflagged')
 };
-/* District across table / filters / stats = PERMANENT district */
 F.district = r => F.qDistrict(r) || F.pDistrict(r);
+
+/* ★★★ DISPLAY ACCESSORS (transliterate to Bengali at display time) ★★★ */
+F.displayName        = r => bnDisplay(F.name(r),        'name');
+F.displayFather      = r => bnDisplay(F.father(r),      'name');
+F.displayMother      = r => bnDisplay(F.mother(r),      'name');
+F.displayInstitution = r => bnDisplay(F.institution(r), 'name');
+F.displayDistrict    = r => bnDisplay(F.district(r),    'district');
+F.displayPDistrict   = r => bnDisplay(F.pDistrict(r),   'district');
+F.displayQDistrict   = r => bnDisplay(F.qDistrict(r),   'district');
 
 /* ==========================================================================
    STATUS CLASSIFICATION
@@ -1355,15 +1533,10 @@ function statusMeta(kind){
 
 /* ==========================================================================
    ★★★ REVIEW FLAG LOGIC ★★★
-   --------------------------------------------------------------------------
-   Sheet column: "Review Flag"  →  values "Yes" / "No"
-   Blank is treated as "No".
-   state.flagCache holds per-session optimistic overrides keyed by Contestant ID.
    ========================================================================== */
 function parseFlag(value){
   const s = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
   if (!s) return false;
-  /* negatives first — "unflagged" contains "flag" */
   if (/^(no|n|false|0|-|—|✗|✕|না|নয়)$/.test(s)) return false;
   if (/(^|\s)(unflag|not[\s_-]*flag|no[\s_-]*flag|unmark)/.test(s)) return false;
   if (/^(yes|y|true|1|✓|✔|হ্যাঁ)$/.test(s)) return true;
@@ -1375,7 +1548,6 @@ function isFlagged(row){
   if (cid && state.flagCache.has(cid)) return state.flagCache.get(cid);
   return parseFlag(F.reviewFlag(row));
 }
-/* Locate the actual sheet key so we can mirror the write locally */
 function flagKeyOf(row){
   return Object.keys(row.n).find(k => /^(reviewflag|reviewmark|flag|shortlisted|shortlist|bookmark|marked|isflagged)$/.test(k)) || '';
 }
@@ -1473,7 +1645,7 @@ async function loadData(){
     const result = await fetchRows();
     state.rows = result.rows;
     state.statusCache.clear();
-    state.flagCache.clear();      /* fresh server data wins */
+    state.flagCache.clear();
     state.loading = false;
 
     if (!state.rows.length){
@@ -1511,8 +1683,9 @@ function uniqSorted(values){
   return Array.from(s).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
 function buildFilters(){
+  /* ★ Filter dropdowns use DISPLAY values (Bengali) so results match what user sees */
   const groups    = uniqSorted(state.rows.map(F.group));
-  const districts = uniqSorted(state.rows.map(F.district));
+  const districts = uniqSorted(state.rows.map(F.displayDistrict));
   const fill = (sel, items, label) => {
     const el = $(sel);
     const cur = el.value;
@@ -1526,19 +1699,25 @@ function applyFilters(){
   const q = state.q.trim().toLowerCase();
   state.filtered = state.rows.filter(r => {
     if (state.group && String(F.group(r)) !== state.group) return false;
-    if (state.district && String(F.district(r)) !== state.district) return false;
+    /* ★ District filter matches the DISPLAY (Bengali) value shown in dropdown */
+    if (state.district && String(F.displayDistrict(r)) !== state.district) return false;
     if (state.status && classifyStatus(r) !== state.status) return false;
-    /* ★ flag filter */
     if (state.flag === 'flagged'   && !isFlagged(r)) return false;
     if (state.flag === 'unflagged' &&  isFlagged(r)) return false;
     if (!q) return true;
+    /* ★ Search matches BOTH raw and transliterated values */
     return [
-      F.name(r), F.id(r),
+      F.name(r), F.displayName(r),
+      F.father(r), F.displayFather(r),
+      F.mother(r), F.displayMother(r),
+      F.institution(r), F.displayInstitution(r),
+      F.id(r),
       formatMobile(F.mobile(r)), formatMobile(F.whatsapp(r)), formatMobile(F.payerMobile(r)),
       F.mobile(r), F.whatsapp(r),
-      F.institution(r), F.trxId(r), F.group(r), F.klass(r),
-      F.district(r), F.pDistrict(r), F.qDistrict(r),
-      F.father(r), F.mother(r)
+      F.trxId(r), F.group(r), F.klass(r),
+      F.district(r), F.displayDistrict(r),
+      F.pDistrict(r), F.displayPDistrict(r),
+      F.qDistrict(r), F.displayQDistrict(r)
     ].some(v => String(v || '').toLowerCase().includes(q));
   });
   state.filtered = sortRows(state.filtered);
@@ -1549,14 +1728,19 @@ function sortRows(rows){
   if (!state.sortKey) return rows;
   const dir = state.sortDir === 'asc' ? 1 : -1;
   const getters = {
-    id: F.id, name: F.name, group: F.group, klass: F.klass,
-    institution: F.institution,
-    district: F.district,
-    pDistrict: F.pDistrict,
+    id: F.id,
+    /* ★ Sorting by name uses DISPLAY (Bengali) value */
+    name: F.displayName,
+    group: F.group,
+    klass: F.klass,
+    /* ★ Sorting by institution uses DISPLAY value */
+    institution: F.displayInstitution,
+    /* ★ Sorting by district uses DISPLAY value */
+    district: F.displayDistrict,
+    pDistrict: F.displayPDistrict,
     amount: F.amount,
     status: r => statusMeta(classifyStatus(r)).label,
     timestamp: F.timestamp,
-    /* ★ flag sort: unflagged (0) → flagged (1) on ascending */
     flag: r => isFlagged(r) ? 1 : 0
   };
   const get = getters[state.sortKey];
@@ -1579,11 +1763,11 @@ function sortRows(rows){
 
 /* ==========================================================================
    RENDER: STATS
+   ★★★ TOTAL FEE NOW COUNTS ONLY APPROVED ENTRIES ★★★
    ========================================================================== */
 function renderStats(){
   const rows = state.rows;
   const total = rows.length;
-  const totalFee = total * CONFIG.fee;
   let approved = 0, pending = 0, rejected = 0, flaggedCount = 0, flaggedApproved = 0, flaggedPending = 0;
   rows.forEach(r => {
     const k = classifyStatus(r);
@@ -1597,27 +1781,41 @@ function renderStats(){
       else if (k === 'pending') flaggedPending++;
     }
   });
+
+  /* ★ Fee is only multiplied by APPROVED count — not all submissions */
+  const approvedFee = approved * CONFIG.fee;
+
   const male = rows.filter(r => /^m|ছেলে/i.test(String(F.gender(r)))).length;
   const female = rows.filter(r => /^f|মেয়ে/i.test(String(F.gender(r)))).length;
 
+  /* ★ District counts use DISPLAY (Bengali) values */
   const permDistricts = new Set(
-    rows.map(F.qDistrict).map(v => String(v).trim()).filter(Boolean)
+    rows.map(F.displayQDistrict).map(v => String(v).trim()).filter(Boolean)
   ).size;
   const permDistrictsFallback = new Set(
-    rows.map(F.district).map(v => String(v).trim()).filter(Boolean)
+    rows.map(F.displayDistrict).map(v => String(v).trim()).filter(Boolean)
   ).size;
   const districtCount = permDistricts || permDistrictsFallback;
 
-  const institutions = new Set(rows.map(F.institution).map(v => String(v).trim()).filter(Boolean)).size;
+  const institutions = new Set(
+    rows.map(F.displayInstitution).map(v => String(v).trim()).filter(Boolean)
+  ).size;
+
   const pct = n => total ? Math.round(n / total * 100) : 0;
 
   const cards = [
     { ico: ICONS.users, val: toBn(total), lbl: 'মোট আবেদন', sub: 'শীটে থাকা সব রেজিস্ট্রেশন' },
-    { ico: ICONS.money, val: '৳ ' + toBn(totalFee), lbl: 'মোট রেজিস্ট্রেশন ফি', sub: `${toBn(CONFIG.fee)} টাকা × ${toBn(total)} আবেদন` },
+    /* ★ Fee card — approved-only, with breakdown sub-line */
+    {
+      ico: ICONS.money,
+      val: '৳ ' + toBn(approvedFee),
+      lbl: 'মোট সংগৃহীত রেজিস্ট্রেশন ফি',
+      sub: `নিশ্চিত ${toBn(approved)} × ৳ ${toBn(CONFIG.fee)} টাকা`,
+      cls: 'stat-fee'
+    },
     { ico: ICONS.check, val: toBn(approved), lbl: 'নিশ্চিত / অনুমোদিত', sub: `সব আবেদনের ${toBn(pct(approved))}%` },
     { ico: ICONS.clock, val: toBn(pending), lbl: 'যাচাই-বাছাই বাকি', sub: `সব আবেদনের ${toBn(pct(pending))}%` },
     { ico: ICONS.ban,   val: toBn(rejected), lbl: 'বাতিল / বরখাস্ত', sub: `সব আবেদনের ${toBn(pct(rejected))}%` },
-    /* ★ Review flag stat card */
     { ico: ICONS.bookmarkFill, val: toBn(flaggedCount), lbl: 'রিভিউ ফ্ল্যাগ', flag: true,
       sub: `অনুমোদিত ${toBn(flaggedApproved)} · অপেক্ষমাণ ${toBn(flaggedPending)}` },
     { ico: ICONS.gender,val: `${toBn(male)} / ${toBn(female)}`, lbl: 'ছেলে / মেয়ে', sub: 'লিঙ্গ অনুপাত' },
@@ -1626,7 +1824,7 @@ function renderStats(){
   ];
 
   $('#statsGrid').innerHTML = cards.map(c => `
-    <div class="stat${c.flag ? ' stat-flag' : ''}">
+    <div class="stat${c.flag ? ' stat-flag' : ''}${c.cls ? ' ' + c.cls : ''}">
       <div class="ico">${c.ico}</div>
       <div class="body">
         <div class="val">${esc(c.val)}</div>
@@ -1650,9 +1848,10 @@ function distribution(rows, getter, limit){
 function renderAnalytics(){
   const rows = state.rows;
   if (!rows.length){ $('#analyticsGrid').innerHTML = ''; return; }
+  /* ★ Analytics use DISPLAY values so charts show Bengali text */
   const groupDist  = distribution(rows, F.group, 6);
   const genderDist = distribution(rows, F.gender, 4);
-  const distDist   = distribution(rows, F.district, 6);
+  const distDist   = distribution(rows, F.displayDistrict, 6);
   const total = rows.length || 1;
   const bar = (label, count, pct, cls) => `
     <div class="bar-row">
@@ -1667,7 +1866,6 @@ function renderAnalytics(){
       </div>
     </div>`;
 
-  /* ★ Flagged-group breakdown card */
   const flaggedRows = rows.filter(isFlagged);
   const flagCard = flaggedRows.length ? `
     <div class="acard">
@@ -1688,11 +1886,13 @@ function renderAnalytics(){
 
 /* ==========================================================================
    RENDER: TABLE
+   ★★★ USES DISPLAY (Bengali) VALUES FOR NAME / FATHER / MOTHER / INSTITUTION / DISTRICT ★★★
    ========================================================================== */
 function thumbHtml(row){
   const raw = String(F.photo(row) || '').trim();
   const url = resolveImage(raw, 120);
-  const ini = initials(F.name(row));
+  /* ★ Thumbnail initials from DISPLAY (Bengali) name */
+  const ini = initials(F.displayName(row));
   if (url){
     return `<div class="thumb-wrap">
       <img class="thumb" src="${escAttr(url)}" alt="" loading="lazy"
@@ -1707,7 +1907,6 @@ function statusBadge(row){
   const meta = statusMeta(kind);
   return `<span class="badge ${meta.cls}">${esc(meta.label)}</span>`;
 }
-/* ★ Bookmark toggle rendered inline in the table */
 function flagButtonHtml(row, idx){
   const on = isFlagged(row);
   const cid = String(F.id(row) || '').trim();
@@ -1746,13 +1945,15 @@ function renderTable(){
 
   tbody.innerHTML = slice.map((row, i) => {
     const idx = start + i;
-    const name = F.name(row) || '—';
+    /* ★ Display Bengali-transliterated values */
+    const name = F.displayName(row) || '—';
+    const institution = F.displayInstitution(row);
+    const districtTxt = F.displayDistrict(row);
     const gv = F.group(row), kl = F.klass(row);
     const gk = [gv, kl].filter(Boolean).join(' · ') || '—';
     const amt = F.amount(row);
     const amtTxt = amt === '' ? '—' : (/[0-9]/.test(String(amt)) ? '৳ ' + toBn(esc(String(amt))) : esc(String(amt)));
     const mobileTxt = formatMobile(F.mobile(row));
-    const districtTxt = F.district(row);
     const flagged = isFlagged(row);
     return `<tr class="${flagged ? 'flagged' : ''}" data-idx="${idx}">
       <td class="sl">${toBn(idx + 1)}</td>
@@ -1768,7 +1969,7 @@ function renderTable(){
         </div>
       </td>
       <td>${esc(gk)}</td>
-      <td><span class="trunc" title="${escAttr(F.institution(row))}">${esc(F.institution(row) || '—')}</span></td>
+      <td><span class="trunc" title="${escAttr(institution)}">${esc(institution || '—')}</span></td>
       <td>${esc(districtTxt || '—')}</td>
       <td class="mono">${esc(mobileTxt || '—')}</td>
       <td style="font-weight:600;white-space:nowrap;color:var(--green-dark)">${amtTxt}</td>
@@ -2044,6 +2245,7 @@ function createPlayer(src, poster){
 
 /* ==========================================================================
    DETAIL MODAL
+   ★★★ DISPLAY VALUES (Bengali transliteration) USED FOR NAME/FATHER/MOTHER/INSTITUTION/DISTRICT ★★★
    ========================================================================== */
 function infoCard(title, icon, items){
   const body = items.map(([label, value, type]) => {
@@ -2136,7 +2338,6 @@ function renderActionBar(row){
 
   const spinner = `<span class="spin"></span>`;
 
-  /* ★★★ Review Flag toggle — available in every status state ★★★ */
   const flagBtn = `
     <button class="action-btn flag${flagged ? ' on' : ''}" data-action="toggle-flag" type="button"
             ${busyFlag ? 'disabled' : ''}
@@ -2202,7 +2403,8 @@ function openDetail(filteredIndex){
   state.currentIndex = filteredIndex;
   state.currentRow = row;
 
-  const name  = F.name(row) || 'নাম নেই';
+  /* ★ Display name uses Bengali transliteration */
+  const name  = F.displayName(row) || 'নাম নেই';
   const photoRaw = String(F.photo(row) || '').trim();
   const photo = photoRaw ? resolveImage(photoRaw, 1000) : '';
   const video = String(F.video(row) || '').trim();
@@ -2262,39 +2464,39 @@ function openDetail(filteredIndex){
     ? `<span class="flag-yes">${ICONS.bookmarkFill} চিহ্নিত (Flagged)</span>`
     : `<span class="empty">চিহ্নিত নয়</span>`;
 
+  /* ★ All info sections use DISPLAY (Bengali) values */
   const sections = [
     infoCard('আবেদনের তথ্য', ICONS.idcard, [
       ['সময়', F.timestamp(row), 'date'],
       ['প্রতিযোগী আইডি', F.id(row)],
       ['স্ট্যাটাস', statusMeta(classifyStatus(row)).label],
-      /* ★ Review flag surfaced in the info list too */
       ['রিভিউ ফ্ল্যাগ', flagValueHtml, 'html'],
       ['মন্তব্য', F.comment(row)]
     ]),
     infoCard('ব্যক্তিগত তথ্য', ICONS.user, [
-      ['পূর্ণ নাম', F.name(row)],
+      ['পূর্ণ নাম', F.displayName(row)],
       ['লিঙ্গ', F.gender(row)],
-      ['পিতার নাম', F.father(row)],
-      ['মাতার নাম', F.mother(row)],
+      ['পিতার নাম', F.displayFather(row)],
+      ['মাতার নাম', F.displayMother(row)],
       ['পেশা', F.occupation(row)]
     ]),
     infoCard('শিক্ষাগত তথ্য', ICONS.school, [
       ['গ্রুপ', F.group(row)],
       ['শ্রেণি', F.klass(row)],
       ['স্তর', F.level(row)],
-      ['প্রতিষ্ঠান', F.institution(row)]
+      ['প্রতিষ্ঠান', F.displayInstitution(row)]
     ]),
     infoCard('যোগাযোগ', ICONS.phone, [
       ['মোবাইল', formatMobile(F.mobile(row))],
       ['হোয়াটসঅ্যাপ', formatMobile(F.whatsapp(row))]
     ]),
     infoCard('বর্তমান ঠিকানা', ICONS.pin, [
-      ['জেলা', F.pDistrict(row)],
+      ['জেলা', F.displayPDistrict(row)],
       ['উপজেলা', F.pUpazila(row)],
       ['গ্রাম / রোড', F.pRoad(row)]
     ]),
     infoCard('স্থায়ী ঠিকানা', ICONS.pin, [
-      ['জেলা', F.qDistrict(row)],
+      ['জেলা', F.displayQDistrict(row)],
       ['উপজেলা', F.qUpazila(row)],
       ['গ্রাম / রোড', F.qRoad(row)]
     ]),
@@ -2352,10 +2554,6 @@ function closeDetail(){
 
 /* ==========================================================================
    ★★★ REVIEW FLAG TOGGLE HANDLER ★★★
-   --------------------------------------------------------------------------
-   Optimistic UI: the badge/row flips instantly, then syncs to the sheet.
-   If the sync fails, the change is rolled back so the UI never lies.
-   Backend action expected:  { action:'updateReviewFlag', contestantId, reviewFlag:'Yes'|'No' }
    ========================================================================== */
 async function toggleReviewFlag(row){
   if (!row) return;
@@ -2371,7 +2569,6 @@ async function toggleReviewFlag(row){
   const nextFlagged = !wasFlagged;
   const key = flagKeyOf(row);
 
-  /* ---- optimistic apply ---- */
   state.flagCache.set(cid, nextFlagged);
   if (key) row.n[key] = nextFlagged ? 'Yes' : 'No';
   state.updating.add(busyKey);
@@ -2390,12 +2587,11 @@ async function toggleReviewFlag(row){
     });
     showToast(
       nextFlagged
-        ? '🔖 "' + (F.name(row) || cid) + '" রিভিউয়ের জন্য চিহ্নিত করা হয়েছে'
-        : 'ফ্ল্যাগ সরানো হয়েছে — ' + (F.name(row) || cid),
+        ? '🔖 "' + (F.displayName(row) || cid) + '" রিভিউয়ের জন্য চিহ্নিত করা হয়েছে'
+        : 'ফ্ল্যাগ সরানো হয়েছে — ' + (F.displayName(row) || cid),
       'flag'
     );
   } catch (err){
-    /* ---- rollback ---- */
     state.flagCache.set(cid, wasFlagged);
     if (key) row.n[key] = wasFlagged ? 'Yes' : 'No';
     if (state.currentRow === row){
@@ -2429,7 +2625,6 @@ async function handleAction(action, stage){
   const row = state.currentRow;
   if (!row) return;
 
-  /* ★ Review flag toggle */
   if (action === 'toggle-flag'){
     toggleReviewFlag(row);
     return;
@@ -2486,9 +2681,10 @@ async function handleAction(action, stage){
 
 /* ==========================================================================
    NOTIFICATION MESSAGES — Stage 1 & Stage 2
+   ★★★ USES DISPLAY NAME (Bengali transliteration) ★★★
    ========================================================================== */
 function buildStage1Message(row){
-  const name  = F.name(row) || 'প্রিয় প্রতিযোগী';
+  const name  = F.displayName(row) || 'প্রিয় প্রতিযোগী';
   const id    = F.id(row)   || '';
   const group = F.group(row) || '';
   const klass = F.klass(row) || '';
@@ -2518,7 +2714,7 @@ function buildStage1Message(row){
 }
 
 function buildStage2Message(row){
-  const name  = F.name(row) || 'প্রিয় প্রতিযোগী';
+  const name  = F.displayName(row) || 'প্রিয় প্রতিযোগী';
   const id    = F.id(row)   || '';
   const group = F.group(row) || '';
   const klass = F.klass(row) || '';
@@ -2565,6 +2761,7 @@ function toWaNumber(mobile){
 
 /* ==========================================================================
    NOTIFICATION MODAL
+   ★★★ WhatsApp number is now prioritized as the recipient ★★★
    ========================================================================== */
 function setNotifyStage(stage, row){
   state.notifyStage = stage;
@@ -2600,11 +2797,46 @@ function setNotifyStage(stage, row){
 
 function openNotifyModal(row, stage){
   if (!row) return;
-  const name   = F.name(row) || 'নাম নেই';
+
+  /* ★ Display name uses Bengali transliteration */
+  const name   = F.displayName(row) || 'নাম নেই';
   const photoRaw = String(F.photo(row) || '').trim();
   const photo  = photoRaw ? resolveImage(photoRaw, 160) : '';
-  const mobile = formatMobile(F.mobile(row) || F.whatsapp(row) || F.payerMobile(row) || '');
   const ini = initials(name);
+
+  /* ★★★ FIX: Strictly prioritize WhatsApp number for WhatsApp notification ★★★
+     Previously defaulted to general mobile / payer mobile. Now the priority is:
+       1) Dedicated WhatsApp column
+       2) Personal mobile (fallback)
+       3) Payer mobile (last resort)
+     This ensures the notification is delivered to the number the applicant
+     specifically registered for WhatsApp contact. */
+  const waNumber    = formatMobile(F.whatsapp(row) || '');
+  const mobileNumber = formatMobile(F.mobile(row) || '');
+  const payerNumber  = formatMobile(F.payerMobile(row) || '');
+  const recipientNumber = waNumber || mobileNumber || payerNumber;
+  const sourceLabel = waNumber ? 'WhatsApp' : (mobileNumber ? 'মোবাইল (fallback)' : (payerNumber ? 'পেমেন্ট নম্বর (fallback)' : ''));
+
+  /* Update WhatsApp badge to reflect source */
+  const waBadge = $('#waBadge');
+  if (waBadge){
+    if (waNumber){
+      waBadge.textContent = '✓ WhatsApp নম্বর';
+      waBadge.style.color = '#0E7A37';
+      waBadge.style.background = 'rgba(37,211,102,.14)';
+      waBadge.style.borderColor = 'rgba(37,211,102,.4)';
+    } else if (mobileNumber || payerNumber){
+      waBadge.textContent = '⚠ fallback: ' + sourceLabel;
+      waBadge.style.color = '#A6520F';
+      waBadge.style.background = 'rgba(230,126,34,.12)';
+      waBadge.style.borderColor = 'rgba(230,126,34,.4)';
+    } else {
+      waBadge.textContent = '⚠ নম্বর নেই';
+      waBadge.style.color = '#8B0000';
+      waBadge.style.background = 'rgba(211,47,47,.1)';
+      waBadge.style.borderColor = 'rgba(211,47,47,.35)';
+    }
+  }
 
   $('#notifyRecipient').innerHTML = `
     <div class="ravatar">${
@@ -2615,12 +2847,12 @@ function openNotifyModal(row, stage){
       <div class="rname">${esc(name)}</div>
       <div class="rmeta">
         ${F.id(row) ? `<span>🆔 <b>${esc(F.id(row))}</b></span>` : ''}
-        ${mobile ? `<span>📞 <b>${esc(mobile)}</b></span>` : ''}
+        ${recipientNumber ? `<span>💬 <b>${esc(recipientNumber)}</b>${waNumber ? ' (WhatsApp)' : ''}</span>` : ''}
         ${isFlagged(row) ? `<span>🔖 <b>Flagged</b></span>` : ''}
       </div>
     </div>`;
 
-  $('#notifyMobile').value = mobile;
+  $('#notifyMobile').value = recipientNumber;
 
   const copyBtn = $('#notifyCopyBtn');
   copyBtn.classList.remove('done');
@@ -2749,7 +2981,6 @@ function bindUI(){
   $('#fGroup').addEventListener('change', e => { state.group = e.target.value; applyFilters(); });
   $('#fDistrict').addEventListener('change', e => { state.district = e.target.value; applyFilters(); });
   $('#fStatus').addEventListener('change', e => { state.status = e.target.value; applyFilters(); });
-  /* ★ Flag filter */
   $('#fFlag').addEventListener('change', e => {
     state.flag = e.target.value;
     e.target.classList.toggle('flagged-active', !!state.flag);
@@ -2776,7 +3007,6 @@ function bindUI(){
   });
 
   $('#tbody').addEventListener('click', e => {
-    /* ★ Inline bookmark toggle takes priority over row-click */
     const flagBtn = e.target.closest('[data-flag-toggle]');
     if (flagBtn && !flagBtn.disabled){
       e.stopPropagation();
@@ -2868,7 +3098,6 @@ function bindUI(){
     const tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
 
-    /* ★ 'B' toggles the review flag for the open record */
     if (e.key.toLowerCase() === 'b' && !e.ctrlKey && !e.metaKey && !e.altKey){
       e.preventDefault();
       if (state.currentRow) toggleReviewFlag(state.currentRow);
